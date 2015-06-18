@@ -78,11 +78,6 @@
 # # Import a version of gdata::format_bytes
 #
 #
-# # Convert all columns in a data.frame to character
-# char_cols <- function(x){
-#   x[] <- lapply(x, as.character)
-#   x
-# }
 #
 #
 #
@@ -119,79 +114,3 @@
 #
 #
 #
-# refactor <- function(x, new_values){
-#
-#   valid <- all(
-#     unlist(lapply(new_values, function(x) dim(x) == 2 & length(x) == 2))
-#   )
-#
-#   if(!is.list(new_values) | !valid){
-#     stop("new_values must be a list of vectors, each of length 2")
-#   }
-#
-#   from <- unlist(lapply(new_values, function(x) x[1]))
-#   to   <- unlist(lapply(new_values, function(x) x[2]))
-#
-#   mapvalues(x, from, to)
-# }
-#
-# # x <- c("a", "b", "c")
-# #
-# # new_values <- list(
-# #   c("a", "A"),
-# #   c("c", "C")
-# # )
-# #
-# # [1] "A" "b" "C"
-#
-#
-# # You should file export to a csv
-# refactor_list <- function(x, filename = NULL){
-#   vals <- names(table(x))
-#
-#   start <- '  c("'
-#   mid1  <- '", '
-#   mid2  <- '"'
-#   end   <- '),\n'
-#
-#   spaces <- char_rep(" ", max(nchar(vals)) - nchar(vals))
-#
-#   strings <- paste0(start, vals, mid1, spaces, mid2, vals, '"', spaces, end)
-#
-#   # Lose the comma from the last one
-#   strings[length(strings)] <- gsub("\\),", ")", strings[length(strings)])
-#
-#   cat(
-#     '\n# Copy this code into your text editor, and tidy up the values in the',
-#     'TO column\n',
-#     '\nnew_vals <- list(\n',
-#     paste0('  # FROM', char_rep(' ', max(nchar(vals))), 'TO\n'),
-#     strings,
-#     ')\n',
-#     '# You can then pass the new_vals object to refactor() '
-#   )
-# }
-#
-# # Taken from plyr::mapvalues (1.8.2)
-# mapvalues <- function (x, from, to, warn_missing = TRUE)
-# {
-#   if (length(from) != length(to)) {
-#     stop("`from` and `to` vectors are not the same length.")
-#   }
-#   if (!is.atomic(x)) {
-#     stop("`x` must be an atomic vector.")
-#   }
-#   if (is.factor(x)) {
-#     levels(x) <- mapvalues(levels(x), from, to, warn_missing)
-#     return(x)
-#   }
-#   mapidx <- match(x, from)
-#   mapidxNA <- is.na(mapidx)
-#   from_found <- sort(unique(mapidx))
-#   if (warn_missing && length(from_found) != length(from)) {
-#     message("The following `from` values were not present in `x`: ",
-#             paste(from[!(1:length(from) %in% from_found)], collapse = ", "))
-#   }
-#   x[!mapidxNA] <- to[mapidx[!mapidxNA]]
-#   x
-# }

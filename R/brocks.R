@@ -343,3 +343,132 @@ html_tri <- function(
 # vswitch <- function(EXPR, ...){
 #   unlist(lapply(EXPR, function(x) switch(x, ...)))
 # }
+
+
+
+# Munge -------------------------------------------------------------------
+
+
+#' Change Factor Levels Using List Lookups
+#'
+#' @param x A \code{\link{factor}} variable
+#' @param new_values A list.
+#'
+#' @return \code{factor}
+#' @export
+#' @name refactor
+#' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+refactor <- function(x, new_values){
+
+  valid <- all(
+    unlist(lapply(new_values, function(x) dim(x) == 2 & length(x) == 2))
+  )
+
+  if(!is.list(new_values) | !valid){
+    stop("new_values must be a list of vectors, each of length 2")
+  }
+
+  from <- unlist(lapply(new_values, function(x) x[1]))
+  to   <- unlist(lapply(new_values, function(x) x[2]))
+
+  mapvalues(x, from, to)
+}
+
+# x <- c("a", "b", "c")
+#
+# new_values <- list(
+#   c("a", "A"),
+#   c("c", "C")
+# )
+#
+# [1] "A" "b" "C"
+
+
+# You should file export to a csv
+refactor_list <- function(x, filename = NULL){
+  vals <- names(table(x))
+
+  start <- '  c("'
+  mid1  <- '", '
+  mid2  <- '"'
+  end   <- '),\n'
+
+  spaces <- rep_char(" ", max(nchar(vals)) - nchar(vals))
+
+  strings <- paste0(start, vals, mid1, spaces, mid2, vals, '"', spaces, end)
+
+  # Lose the comma from the last one
+  strings[length(strings)] <- gsub("\\),", ")", strings[length(strings)])
+
+  cat(
+    '\n# Copy this code into your text editor, and tidy up the values in the',
+    'TO column\n',
+    '\nnew_vals <- list(\n',
+    paste0('  # FROM', rep_char(' ', max(nchar(vals))), 'TO\n'),
+    strings,
+    ')\n',
+    '# You can then pass the new_vals object to refactor() '
+  )
+}
+
+# Taken from plyr::mapvalues (1.8.2)
+# Copyright 2014 Hadley Wickham
+# Didn't seem worth making the whole package a dependency for 20 LOC!
+#' @keywords internal
+mapvalues <- function (x, from, to, warn_missing = TRUE)
+{
+  if (length(from) != length(to)) {
+    stop("`from` and `to` vectors are not the same length.")
+  }
+  if (!is.atomic(x)) {
+    stop("`x` must be an atomic vector.")
+  }
+  if (is.factor(x)) {
+    levels(x) <- mapvalues(levels(x), from, to, warn_missing)
+    return(x)
+  }
+  mapidx <- match(x, from)
+  mapidxNA <- is.na(mapidx)
+  from_found <- sort(unique(mapidx))
+  if (warn_missing && length(from_found) != length(from)) {
+    message("The following `from` values were not present in `x`: ",
+            paste(from[!(1:length(from) %in% from_found)], collapse = ", "))
+  }
+  x[!mapidxNA] <- to[mapidx[!mapidxNA]]
+  x
+}
+
+
+#' Convert all columns in a data.frame to character
+#'
+#' \bold{\code{R}}'s tendency to convert strings to \code{factor}s is well
+#' meaning, but occasionally annoying when munging data (e.g. when using
+#' \code{\link{rbind}}, or \code{dplyr}'s \code{\link[dplyr]{bind_rows}}).
+#' \code{char_cols} turns all \code{factor} variables in a
+#' \code{\link{data.frame}} into \code{\link{character}} variables. Optionally,
+#' it will turn all variables to \code{character} if the parameter \code{all} is
+#' set to \code{TRUE}.
+#'
+#' @param x A \code{data.frame}
+#' @param all Should all the columns (not just those of \code{factor}s) be
+#'   converted to \code{character}?
+#'
+#' @export
+#' @name char_cols
+#' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+char_cols <- function(x, all = FALSE){
+
+  f <- function(x){
+    if(is.factor(x)){
+      as.character(x)
+    } else{
+      x
+    }
+  }
+
+  if(all)
+    f <- as.character
+
+  x[] <- lapply(x, f)
+  x
+}

@@ -2,10 +2,13 @@
 
 export(ac_se)
 export(age_breaks)
+export(char_cols)
 export(consolidate_values)
 export(html_tri)
+export(kill_cols)
 export(killcols)
 export(lz)
+export(refactor)
 export(rep_char)
 export(rev_levs)
 export(scale_strip)
