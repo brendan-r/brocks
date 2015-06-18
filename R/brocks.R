@@ -40,16 +40,17 @@ rev_levs <- function(x){
 
 #' Kill off non-informative columns in a data.frame
 #'
-#' \code{killcols} accepts a \code{\link{data.frame}} or \code{\link{matrix}}, and returns another, containg only the columns with more than one unique non-missing value. By default, empty strings ("") are converted to \code{NA}, and not considered informative.
+#' \code{kill_cols} accepts a \code{\link{data.frame}} or \code{\link{matrix}}, and returns another, containg only the columns with more than one unique non-missing value. By default, empty strings ("") are converted to \code{NA}, and not considered informative.
 #'
-#' @name killcols
+#' @name kill_cols
 #' @aliases killcols
 #' @param x A \code{data.frame}
-#' @param empty_strings \code{logical}. Should empty strings ("") be converted to \code{NA}?
+#' @param empty_strings \code{logical}. Should empty strings ("") be converted
+#'   to \code{NA}?
 #' @return A \code{data.frame}, less non-varying variables.
 #' @export
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
-killcols <- function(x, empty_strings = TRUE){
+kill_cols <- function(x, empty_strings = TRUE){
   n.lev <- function(x){
     if(empty_strings)
       x[x == ""] <- NA
@@ -58,6 +59,10 @@ killcols <- function(x, empty_strings = TRUE){
 
   x[,as.vector(apply(x, 2, n.lev)) > 1]
 }
+
+#' @name kill_cols
+#' @export
+killcols <- kill_cols
 
 
 #' Convert Integer/Numeric Ages to a Factor Variable of Standard Age Groups
