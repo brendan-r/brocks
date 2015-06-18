@@ -30,23 +30,22 @@ A vector of \code{\link{character}} values, containing HTML so that
 }
 \description{
 {
-When producing numbers in R markdown documents, it can be nice to try and
-draw readers' attention to increases and decreases. The \code{html_tri}
-function takes a numeric vector, and returns a \code{\link{character}}
-vector of HTML strings, which will render in an (R) markdown document as
-numbers accompanied with a little green 'upward' triangle
-for positive numbers, and a little red 'downward' triangle for
-negative ones, and a little black square for numbers which are exactly 0 by
-default. The colours can be altered by passing valid CSS colour values to the
-\code{colours} argument, and the symbols by passing valid HTML character
-values to the \code{symbols} argument. The default values are in HTML decimal
-character codes.
+  When producing numbers in R markdown documents, it can be nice to try and
+  draw readers' attention to increases and decreases. The \code{html_tri}
+  function takes a numeric vector, and returns a \code{\link{character}}
+  vector of HTML strings, which will render in an (R) markdown document as
+  numbers accompanied with a green 'upward' triangle for positive numbers, a
+  red 'downward' triangle for negative ones, and a black square for numbers
+  which are exactly 0 by default. The colours can be altered by passing valid
+  CSS colour values to the \code{colours} argument, and the symbols by
+  passing valid HTML character values to the \code{symbols} argument. The
+  default values are in HTML decimal character codes.
 
-If you'd only like to green/red triangles for some non-zero numbers, you can
-use the subset argument to pass a \code{\link{logical}} vector (the same)
-length as \code{x} to \code{html_tri}. This will mean that only elements of
-\code{x} will get a traingle when they are non-negative \emph{and}
-\code{subset} is \code{TRUE}.
+  If you'd only like to green/red triangles for some non-zero numbers, you
+  can use the subset argument to pass a \code{\link{logical}} vector (the
+  same) length as \code{x} to \code{html_tri}. This will mean that only
+  elements of \code{x} will get a traingle when they are non-negative
+  \emph{and} \code{subset} is \code{TRUE}.
 }
 }
 \author{
