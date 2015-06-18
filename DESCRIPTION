@@ -7,7 +7,7 @@ Authors@R: person("Brendan", "Rocks", email = "rocks.brendan@gmail.com",
     role = c("aut", "cre"))
 URL: https://github.com/brendan-R/brocks/
 BugReports: https://github.com/brendan-R/brocks/issues
-Description: The personal R functions of Brendan Rocks 
+Description: The personal R functions of Brendan Rocks.
 License: MIT + file LICENSE
 Imports: 
     stringr
