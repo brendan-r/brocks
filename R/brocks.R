@@ -1,12 +1,14 @@
 #' Turn numbers to strings, with leading zeros
 #'
-#' Often useful for creating composite primary keys which order nicely.
+#' Sometimes useful for creating composite primary keys, which order nicely.
 #'
 #' @name lz
-#' @aliases lz
-#' @param x A \code{\link{numeric}} \code{\link{vector}} (non numeric values will be coerced)
-#' @param n The character length of the returned strings. Defaults to the length of the maximum value of x
-#' @return A \code{\link{character}} \code{\link{vector}} of those numbers, with leading zeros
+#' @param x A \code{\link{numeric}} \code{\link{vector}} (non numeric values
+#'   will be coerced)
+#' @param n The character length of the returned strings. Defaults to the length
+#'   of the maximum value of x
+#' @return A \code{\link{character}} \code{\link{vector}} of those numbers, with
+#'   leading zeros
 #' @export
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
 #' @examples

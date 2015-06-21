@@ -7,15 +7,18 @@
 lz(x, n = nchar(max(as.numeric(x))))
 }
 \arguments{
-\item{x}{A \code{\link{numeric}} \code{\link{vector}} (non numeric values will be coerced)}
+\item{x}{A \code{\link{numeric}} \code{\link{vector}} (non numeric values
+will be coerced)}
 
-\item{n}{The character length of the returned strings. Defaults to the length of the maximum value of x}
+\item{n}{The character length of the returned strings. Defaults to the length
+of the maximum value of x}
 }
 \value{
-A \code{\link{character}} \code{\link{vector}} of those numbers, with leading zeros
+A \code{\link{character}} \code{\link{vector}} of those numbers, with
+  leading zeros
 }
 \description{
-Often useful for creating composite primary keys which order nicely.
+Sometimes useful for creating composite primary keys, which order nicely.
 }
 \examples{
 lz(c(1, 10, 100))
