@@ -2,7 +2,7 @@
 % Please edit documentation in R/brocks.R
 \name{ac_se}
 \alias{ac_se}
-\title{Standard errors for proportions using Agresti-Coull intervals}
+\title{Agresti-Coull Intervals}
 \usage{
 ac_se(logical_var, wt = 2)
 }
@@ -23,5 +23,8 @@ can be specified, via the \code{wt} argument).
 }
 \author{
 Brendan Rocks \email{rocks.brendan@gmail.com}
+}
+\references{
+{Ag, F., & Dewaele, J.M. (2002). Variation in the contextuality of language: An empirical measure. Context in Context, Special issue of Foundations of Science, 7 (3), 293-340.}
 }
 

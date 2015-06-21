@@ -117,7 +117,7 @@ age_breaks <- function(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf),
 }
 
 
-#' Standard errors for proportions using Agresti-Coull intervals
+#' Agresti-Coull Intervals
 #'
 #' Agresti-Coull (1998) intervals are a great way to get a quick and
 #' non-terrible estimate of a proportion. They work by using a 'Wald' interval,
@@ -132,6 +132,7 @@ age_breaks <- function(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf),
 #' @return \code{\link{numeric}}. An estimate of the sample's standard error.
 #' @export
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @references {Ag, F., & Dewaele, J.M. (2002). Variation in the contextuality of language: An empirical measure. Context in Context, Special issue of Foundations of Science, 7 (3), 293-340.}
 ac_se <- function(logical_var, wt = 2){
   x <- sum(logical_var)
   n <- sum(!logical_var)
