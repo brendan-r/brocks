@@ -1,58 +1,131 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "The brocks Pakcage"
+author: "[Brendan Rocks](rocks.brendan@gmail.com)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{The brocks Pakcage}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+# Hullo
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+# Data Munging Functions
 
-## Vignette Info
+*Proverb:*
 
-Note the various macros within the `vignette` setion of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+> Data cleaning code cannot be clean. It's a sort of sin eater.
+>
+> --- [\@StatFact](https://twitter.com/StatFact) 
+> [25 Jul 2014](https://twitter.com/statfact/status/492753200190341120)
 
-## Styles
+These functions will never be able to make your *munge code* look beautfiul. However, they should make it easier to understand when you have to come back to it!
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
 
-## Figures
+Even with healthy commenting, much factor-munge code can be difficult to read, and transformations which look appropriate can be overridden by changes made further down a script. If something breaks and you need to know how a factor's been recoded, often there isn't a single place to look (or command to fail).
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+Things get more complicated the more levels a factor has, but even with just two levels, things can still be cumbersome. Here's an example using a dichotimised classification of gender:
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+## Haphazard refactoring code
+
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+# Kill off blanks
+testdata$gender[testdata$gender == ""] <- NA
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+# Check factor levs...
+levels(factor(testdata$gender))
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+# Code all males as 'males', and females as 'females'. For our purposes, 
+# everything else should be NA
 
-## More Examples
+# Tidy up Males. Luckily, these all being with an 'm'!
+testdata$gender[grepl(testdata$gender, "^m", ignore.case = TRUE)] <- "male"
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+# Tidy up Females
+# No-one has entered 'female', so convert gender to character to avoid factor 
+# level warning
+testdata$gender <- as.character(testdata$gender)
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+# Munge levels
+testdata$gender[testdata$gender %in% c("Female", "f", "F", "Woman")] <- "female"
+
+# Make everything that isn't male or female missing
+testdata$gender[!testdata$gender %in% c("male", "female")] <- NA
+
+testdata$gender <- factor(testdata$gender)
+
+
 ```
 
-Also a quote using `>`:
+The code above is perfectly functional, but headache inducing in a number of ways. First, while regular expressions have been used to keep the code short, they can also produce spurious data if a new pattern is added to the data set (e.g. in the above, anything beginning with m, like "mixed", "multiple", or "mind your own business!").
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+Secondly if "male" drops out of the dataset (or the code is run on a subset), then the code will fail with a factor levels warning.
+
+
+## Clearer refactoring code
+
+However, we can make things easier on our future selves by writing factor munge code that's *offensively simple:*
+
+```{r}
+# Refactor Gender ---------------------------------------------------------
+
+new_vals <- list(
+   # FROM      TO
+   c("",        NA     ),
+   c("<NA>",    NA     ),
+   c("F",      "female"),
+   c("Female", "female"),
+   c("m",      "male"  ),
+   c("M",      "male"  ),
+   c("Male",   "male"  ),
+   c("Man",    "male"  ),
+   c("Woman",  "female"),
+   c("n/a",     NA     )
+ )
+ 
+# testdata$gender <- refactor(testdata$gender, new_vals)
+
+```
+
+This approach has several advantages:
+* Visually distinctive and *complete*
+  * you don't have to scour a file to work out where all the changes to a factor level (should) happen
+* It's so *intellectually impoverished*
+  * That you can understand what's happening in a few seconds (not minutes, or worse)
+* Trivial to edit
+  * (for almost anyone)
+* Can be set to fail if data's not as expected 
+  * (`throw_error = TRUE`)
+
+The main disadvantage of this code is that it looks no fun to write. That's where the `refactor_list` function comes in, automatically generating the R code for arbitary factor levels. All you have to do is copy and paste it in to your script, and make a your edits to the 'TO' column.
+
+
+```
+refactor_list(testdata$gender)
+```
+
+You can even make `refactor_list` take a first pass at those edits for you, by setting the `consolidate` parameter to `TRUE`. This will run the 'TO' factor levels through the `consolidate_values` function, which uses a few simple rules to try and reduce variations (mainly cases, spacing, and punctuation, see `?consolidate_values`).
+
+
+consolidate_values
+
+scale_strip
+
+refactor
+
+refactor_list
+
+
+
+# HTML Test
+
+```{r}
+library(brocks)
+```
+
+This is a number `r html_tri(5)` `r html_tri(-5)`
+
+
