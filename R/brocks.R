@@ -537,3 +537,4 @@ char_cols <- function(x, all = FALSE){
 #' @docType data
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
 #' @keywords data
+NULL
