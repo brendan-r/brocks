@@ -120,12 +120,29 @@ refactor_list
 
 
 
-# HTML Test
+# Number Formatting
 
 ```{r}
 library(brocks)
 ```
 
-This is a number `r html_tri(5)` `r html_tri(-5)`
+Does this work? `r html_tri(1:-1)` Does it?
+
+Does this work? `r html_tri(1:-1, symbols = c("up" = "&#128522;", "down" = "&#128542;", "nochange" = "&#128528;"))` Does it?
 
 
+```{r}
+
+# This will output 'raw' HTML. To see the final result in an HTML markdown
+# document, see the package vignette; vignette("brocks")
+
+html_tri(1:-1)
+
+# You could use other HTML symbols, even emojis if you like!
+# These are HTML decimal codes (only unicode allowed in R packages), but
+# you could use any valid characters (e.g. copy and paste)
+
+html_tri(1:-1, symbols = c("up" = "&#128522;", "down" = "&#128542;",
+  "nochange" = "&#128528;"))
+
+```
