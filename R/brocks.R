@@ -224,9 +224,10 @@ consolidate_values <- function(
   x <- gsub("[[:space:]]*/[[:space:]]*", "/", x)
   # Remove spaces before commas, colons, and semicolons
   # Pretty sure there's a nicer way of doing this with clever regex!
-  x <- gsub("[[:space:]]*,", ",", x)
-  x <- gsub("[[:space:]]*;", ";", x)
-  x <- gsub("[[:space:]]*:", ":", x)
+  x <- gsub("[[:space:]]*,[[:space:]]*", ", ", x)
+  x <- gsub("[[:space:]]*;[[:space:]]*", "; ", x)
+  x <- gsub("[[:space:]]*:[[:space:]]*", ": ", x)
+  x <- gsub("[[:space:]]*-[[:space:]]*", " - ", x)
   # Remove spaces after currency symbols (just dollars for now)
   x <- gsub("\\$[[:space:]]*", "$", x)
   # Replace all underscores and full stops with spaces
