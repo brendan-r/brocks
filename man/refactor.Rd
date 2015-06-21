@@ -4,12 +4,15 @@
 \alias{refactor}
 \title{Change Factor Levels Using List Lookups}
 \usage{
-refactor(x, new_values)
+refactor(x, new_values, throw_error = FALSE)
 }
 \arguments{
 \item{x}{A \code{\link{factor}} variable}
 
-\item{new_values}{A list.}
+\item{new_values}{A list}
+
+\item{throw_error}{If there are values in \code{x} which are not explicitly
+  mapped in \code{new_values}, should the function throw an error?}
 }
 \value{
 \code{factor}

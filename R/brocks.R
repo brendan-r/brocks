@@ -356,13 +356,15 @@ html_tri <- function(
 #' Change Factor Levels Using List Lookups
 #'
 #' @param x A \code{\link{factor}} variable
-#' @param new_values A list.
+#' @param new_values A list
+#' @param throw_error If there are values in \code{x} which are not explicitly
+#'   mapped in \code{new_values}, should the function throw an error?
 #'
 #' @return \code{factor}
 #' @export
 #' @name refactor
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
-refactor <- function(x, new_values){
+refactor <- function(x, new_values, throw_error = FALSE){
 
   valid <- all(
     unlist(lapply(new_values, function(x) dim(x) == 2 & length(x) == 2))
@@ -374,6 +376,10 @@ refactor <- function(x, new_values){
 
   from <- unlist(lapply(new_values, function(x) x[1]))
   to   <- unlist(lapply(new_values, function(x) x[2]))
+
+  if(!all(unique(x) %in% from) & throw_error){
+    stop("x contains new levels not found in refactor mapping!")
+  }
 
   mapvalues(x, from, to)
 }
@@ -389,30 +395,60 @@ refactor <- function(x, new_values){
 
 
 # You should file export to a csv
-refactor_list <- function(x, filename = NULL){
-  vals <- names(table(x))
+refactor_list <- function(x, consolidate = FALSE, file = NULL){
+  vals1 <- names(table(x))
 
-  start <- '  c("'
-  mid1  <- '", '
-  mid2  <- '"'
-  end   <- '),\n'
+  if(consolidate){
+    # Run the to values through consolidate_values
+    vals2 <- consolidate_values(vals)
+    vals <- c(vals1, vals2)
+  } else{
+    # If you're not consolidting values, then the from and to values will be the
+    # same
+    vals <- vals2 <- vals1
+  }
 
-  spaces <- rep_char(" ", max(nchar(vals)) - nchar(vals))
+  if(!is.null(file)){
+    # Write the lookup table out to a file
+    if(!assertthat::see_if(assertthat::is.writeable(file)))
+      stop("'file' is not a writable path")
 
-  strings <- paste0(start, vals, mid1, spaces, mid2, vals, '"', spaces, end)
+    if(!grepl("\\.csv$", file))
+      warning("Heads up: Lookup table written to .csv but file name supplied '",
+              file, "' does not end in '.csv'")
 
-  # Lose the comma from the last one
-  strings[length(strings)] <- gsub("\\),", ")", strings[length(strings)])
+    write.csv(data.frame(from = vals1, to = vals2), row.names = FALSE)
 
-  cat(
-    '\n# Copy this code into your text editor, and tidy up the values in the',
-    'TO column\n',
-    '\nnew_vals <- list(\n',
-    paste0('  # FROM', rep_char(' ', max(nchar(vals))), 'TO\n'),
-    strings,
-    ')\n',
-    '# You can then pass the new_vals object to refactor() '
-  )
+  } else {
+    # Print the lookup table out to a .csv file
+
+    start <- '  c("'
+    mid1  <- '", '
+    end   <- '),\n'
+
+    # If the 'TO' value is NA, don't put it in quotes
+    vals_2_paren <- ifelse(is.na(vals2), ' ', '"')
+
+    spaces1 <- rep_char(" ", max(nchar(vals1)) - nchar(vals1))
+    spaces2 <- rep_char(" ", max(nchar(vals2)) - nchar(vals2))
+
+    strings <- paste0(
+      start, vals1, mid1, spaces1, vals_2_paren, vals2, vals_2_paren, spaces2, end
+    )
+
+    # Lose the comma from the last one
+    strings[length(strings)] <- gsub("\\),", ")", strings[length(strings)])
+
+    cat(
+      '\n# Copy this code into your text editor, and tidy up the values in the',
+      'TO column\n',
+      '\nnew_vals <- list(\n',
+      paste0('  # FROM', rep_char(' ', max(nchar(vals))), 'TO\n'),
+      strings,
+      ')\n',
+      '# You can then pass the new_vals object to refactor() '
+    )
+  }
 }
 
 # Taken from plyr::mapvalues (1.8.2)

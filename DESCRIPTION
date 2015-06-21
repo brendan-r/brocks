@@ -9,9 +9,10 @@ URL: https://github.com/brendan-R/brocks/
 BugReports: https://github.com/brendan-R/brocks/issues
 Description: The personal R functions of Brendan Rocks.
 License: MIT + file LICENSE
-Imports: 
-    stringr
-Suggests: 
+Imports:
+    stringr,
+    assertthat
+Suggests:
     testthat,
     knitr
 VignetteBuilder: knitr
