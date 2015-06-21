@@ -512,3 +512,13 @@ char_cols <- function(x, all = FALSE){
   x[] <- lapply(x, f)
   x
 }
+
+
+#' This is data to be included in my package
+#'
+#' An idealised test data set, for demonstrating some of the functions
+#'
+#' @name test_data
+#' @docType data
+#' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @keywords data
