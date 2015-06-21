@@ -6,7 +6,7 @@
 \usage{
 html_tri(x, format = round, subset = TRUE, symbols = c(up = "&#9650;",
   down = "&#9660;", nochange = "&#9632;"), colours = c(up = "green", down =
-  "red", ncochange = "black"))
+  "red", nochange = "black"))
 }
 \arguments{
 \item{x}{A \code{\link{numeric}} \code{\link{vector}}}
@@ -47,6 +47,19 @@ A vector of \code{\link{character}} values, containing HTML so that
   elements of \code{x} will get a traingle when they are non-negative
   \emph{and} \code{subset} is \code{TRUE}.
 }
+}
+\examples{
+# This will output 'raw' HTML. To see the final result in an HTML markdown
+# document, see the package vignette; vignette("brocks")
+
+html_tri(runif(10))
+
+# You could use other HTML symbols, even emojis if you like!
+# These are HTML decimal codes (only unicode allowed in R packages), but
+# you could use any valid characters (e.g. copy and paste)
+
+html_tri(runif(10), symbols = c("up" = "&#128522;", "down" = "&#128542;",
+  "nochange" = "&#128528;"))
 }
 \author{
 Brendan Rocks \email{rocks.brendan@gmail.com}

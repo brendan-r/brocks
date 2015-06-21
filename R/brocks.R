@@ -313,10 +313,23 @@ scale_strip <- function(x){
 #' @export
 #' @name html_tri
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @examples
+#' # This will output 'raw' HTML. To see the final result in an HTML markdown
+#' # document, see the package vignette; vignette("brocks")
+#'
+#' html_tri(runif(10))
+#'
+#' # You could use other HTML symbols, even emojis if you like!
+#' # These are HTML decimal codes (only unicode allowed in R packages), but
+#' # you could use any valid characters (e.g. copy and paste)
+#'
+#' html_tri(runif(10), symbols = c("up" = "&#128522;", "down" = "&#128542;",
+#'   "nochange" = "&#128528;"))
+#'
 html_tri <- function(
   x, format = round, subset = TRUE,
   symbols = c(up = "&#9650;", down = "&#9660;", nochange = "&#9632;"),
-  colours = c(up = "green", down = "red", ncochange = "black")
+  colours = c(up = "green", down = "red", nochange = "black")
 ){
 
   arrow_fun <- function(x, dir){
@@ -328,7 +341,7 @@ html_tri <- function(
     ifelse(!sign(x) | !subset, "nochange", ifelse(x > 0, "up", "down"))
   }
 
-  mapply(arrow_fun, x, dir_fun(x))
+  arrow_fun(x, dir_fun(x))
 }
 
 
