@@ -21,10 +21,13 @@ non-terrible estimate of a proportion. They work by using a 'Wald' interval,
 after the addition of 2 successes and 2 failures to the sample (other numbers
 can be specified, via the \code{wt} argument).
 }
+\examples{
+ac_se(as.logical(round(runif(10))))
+}
 \author{
 Brendan Rocks \email{rocks.brendan@gmail.com}
 }
 \references{
-{Ag, F., & Dewaele, J.M. (2002). Variation in the contextuality of language: An empirical measure. Context in Context, Special issue of Foundations of Science, 7 (3), 293-340.}
+{Agresti, A., & Coull, B. A. (1998). Approximate is better than "exact" for interval estimation of binomial proportions. \emph{The American Statistician}, 52(2), 119-126.}
 }
 

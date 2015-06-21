@@ -132,7 +132,9 @@ age_breaks <- function(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf),
 #' @return \code{\link{numeric}}. An estimate of the sample's standard error.
 #' @export
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
-#' @references {Ag, F., & Dewaele, J.M. (2002). Variation in the contextuality of language: An empirical measure. Context in Context, Special issue of Foundations of Science, 7 (3), 293-340.}
+#' @references {Agresti, A., & Coull, B. A. (1998). Approximate is better than "exact" for interval estimation of binomial proportions. \emph{The American Statistician}, 52(2), 119-126.}
+#' @examples
+#' ac_se(as.logical(round(runif(10))))
 ac_se <- function(logical_var, wt = 2){
   x <- sum(logical_var)
   n <- sum(!logical_var)
