@@ -1,15 +1,13 @@
 ---
-title: "The brocks Pakcage"
-author: "[Brendan Rocks](rocks.brendan@gmail.com)"
+title: "brocks"
+author: "[Brendan Rocks](mailto:rocks.brendan@gmail.com)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{The brocks Pakcage}
+  %\VignetteIndexEntry{brocks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-# Hullo
 
 # Data Munging Functions
 
@@ -22,7 +20,10 @@ vignette: >
 
 These functions will never be able to make your *munge code* look beautfiul. However, they should make it easier to understand when you have to come back to it!
 
-
+```{r, echo=FALSE}
+library(brocks)
+data(test_data)
+```
 
 Even with healthy commenting, much factor-munge code can be difficult to read, and transformations which look appropriate can be overridden by changes made further down a script. If something breaks and you need to know how a factor's been recoded, often there isn't a single place to look (or command to fail).
 
@@ -30,33 +31,28 @@ Things get more complicated the more levels a factor has, but even with just two
 
 ## Haphazard refactoring code
 
-```
-
+```{r}
 # Kill off blanks
-testdata$gender[testdata$gender == ""] <- NA
-
-# Check factor levs...
-levels(factor(testdata$gender))
+test_data$gender[test_data$gender == ""] <- NA
 
 # Code all males as 'males', and females as 'females'. For our purposes, 
 # everything else should be NA
 
 # Tidy up Males. Luckily, these all being with an 'm'!
-testdata$gender[grepl(testdata$gender, "^m", ignore.case = TRUE)] <- "male"
+test_data$gender[grepl("^m", test_data$gender, ignore.case = TRUE)] <- "male"
 
 # Tidy up Females
 # No-one has entered 'female', so convert gender to character to avoid factor 
 # level warning
-testdata$gender <- as.character(testdata$gender)
+test_data$gender <- as.character(test_data$gender)
 
 # Munge levels
-testdata$gender[testdata$gender %in% c("Female", "f", "F", "Woman")] <- "female"
+test_data$gender[test_data$gender %in% c("Female", "f", "F", "Woman")] <- "female"
 
 # Make everything that isn't male or female missing
-testdata$gender[!testdata$gender %in% c("male", "female")] <- NA
+test_data$gender[!test_data$gender %in% c("male", "female")] <- NA
 
-testdata$gender <- factor(testdata$gender)
-
+test_data$gender <- factor(test_data$gender)
 
 ```
 
@@ -86,7 +82,7 @@ new_vals <- list(
    c("n/a",     NA     )
  )
  
-# testdata$gender <- refactor(testdata$gender, new_vals)
+test_data$gender <- refactor(test_data$gender, new_vals)
 
 ```
 
@@ -104,7 +100,7 @@ The main disadvantage of this code is that it looks no fun to write. That's wher
 
 
 ```
-refactor_list(testdata$gender)
+refactor_list(test_data$gender)
 ```
 
 You can even make `refactor_list` take a first pass at those edits for you, by setting the `consolidate` parameter to `TRUE`. This will run the 'TO' factor levels through the `consolidate_values` function, which uses a few simple rules to try and reduce variations (mainly cases, spacing, and punctuation, see `?consolidate_values`).
