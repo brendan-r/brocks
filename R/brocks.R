@@ -267,10 +267,10 @@ scale_strip <- function(x){
   if (is.data.frame(x)){
     for(i in 1:ncol(x))
       x[,i] <- ss(x[,i])
-  } else if (is.vector(x)) {
+  } else if (is.vector(x) | is.factor(x)) {
     x <- ss(x)
   } else {
-    stop("x must be a data.frame, or vecotr")
+    stop("x must be a data.frame, factor or vector")
   }
 
   return(x)
