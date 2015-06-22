@@ -2,37 +2,53 @@
 % Please edit documentation in R/brocks.R
 \name{age_breaks}
 \alias{age_breaks}
-\title{Convert Integer/Numeric Ages to a Factor Variable of Standard Age Groups}
+\title{Convert Ages or Dates, to a Factor Variable of Standard Age Groups}
 \usage{
 age_breaks(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf), right = FALSE,
   ...)
 }
 \arguments{
-\item{x}{A \code{\link{numeric}} \code{\link{vector}}}
+\item{x}{A \code{\link{vector}} of \code{\link{numeric}} data (ages), or
+one of the \code{\link{DateTimeClasses}} for a date of birth}
 
-\item{breaks}{a A \code{\link{numeric}} \code{\link{vector}} of cutpoints.}
+\item{breaks}{a A \code{\link{numeric}} \code{\link{vector}} of cutpoints}
 
 \item{right}{Passed internally to \code{\link{cut}}
-Internally passed to \code{\link{cut}}.}
+Internally passed to \code{\link{cut}}}
 
 \item{...}{Additional arguments passed to \code{\link{cut}}}
 }
 \value{
-A \code{\link{character}} \code{\link{vector}} of those numbers, with leading zeros
+\code{\link{factor}} age groups
 }
 \description{
-Convert integer/numeric ages to a factor, of standard age groups, with
+Convert integer/numeric ages, or dates (of birth) to a factor of standard age groups, with
 presentable labels, ordered from youngest to oldest. The default provides the
 'standard' age groups used by much of the market research industry. Custom
 age breaks can also be used, by passing a vector to the \code{breaks}
 argument.
 }
 \note{
-This function does not round up ages, and so the common
+This function does not round ages, and so the common
   cultural/numerical interpretation of age works with decimal numbers. For
-  example someone who has existed for 17.99 years is said to be an 17 year
+  example someone who has existed for 17.999 years is said to be 17 years
   old. The function (with default settings) will process 17 and 17.9999 in
   the same fashion.
+}
+\examples{
+data(test_data)
+
+# A 'rough and ready' way of calculating ages
+test_data$age <- as.numeric(Sys.Date() - test_data$dob) /365
+
+# Let's put those ages into groups
+test_data$age_group <- age_breaks(test_data$age)
+
+# Hooray!
+table(test_data$age_group)
+
+# We could do the above by simply passing in the dates of birth
+test_data$age_group <- age_breaks(test_data$dob)
 }
 \author{
 Brendan Rocks \email{rocks.brendan@gmail.com}

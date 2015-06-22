@@ -11,7 +11,8 @@ Description: The personal R functions of Brendan Rocks.
 License: MIT + file LICENSE
 Imports:
     stringr,
-    assertthat
+    assertthat,
+    lubridate
 Suggests:
     testthat,
     knitr

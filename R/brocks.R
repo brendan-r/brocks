@@ -82,29 +82,45 @@ kill_cols <- function(x, empty_strings = TRUE){
 killcols <- kill_cols
 
 
-#' Convert Integer/Numeric Ages to a Factor Variable of Standard Age Groups
+#' Convert Ages or Dates, to a Factor Variable of Standard Age Groups
 #'
-#' Convert integer/numeric ages to a factor, of standard age groups, with
+#' Convert integer/numeric ages, or dates (of birth) to a factor of standard age groups, with
 #' presentable labels, ordered from youngest to oldest. The default provides the
 #' 'standard' age groups used by much of the market research industry. Custom
 #' age breaks can also be used, by passing a vector to the \code{breaks}
 #' argument.
 #'
-#' @note This function does not round up ages, and so the common
+#' @note This function does not round ages, and so the common
 #'   cultural/numerical interpretation of age works with decimal numbers. For
-#'   example someone who has existed for 17.99 years is said to be an 17 year
+#'   example someone who has existed for 17.999 years is said to be 17 years
 #'   old. The function (with default settings) will process 17 and 17.9999 in
 #'   the same fashion.
 #'
 #' @name age_breaks
-#' @param x A \code{\link{numeric}} \code{\link{vector}}
-#' @param breaks a A \code{\link{numeric}} \code{\link{vector}} of cutpoints.
+#' @param x A \code{\link{vector}} of \code{\link{numeric}} data (ages), or
+#'   one of the \code{\link{DateTimeClasses}} for a date of birth
+#' @param breaks a A \code{\link{numeric}} \code{\link{vector}} of cutpoints
 #' @param right Passed internally to \code{\link{cut}}
-#'   Internally passed to \code{\link{cut}}.
+#'   Internally passed to \code{\link{cut}}
 #' @param ... Additional arguments passed to \code{\link{cut}}
-#' @return A \code{\link{character}} \code{\link{vector}} of those numbers, with leading zeros
+#' @return \code{\link{factor}} age groups
 #' @export
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @examples
+#' data(test_data)
+#'
+#' # A 'rough and ready' way of calculating ages
+#' test_data$age <- as.numeric(Sys.Date() - test_data$dob) /365
+#'
+#' # Let's put those ages into groups
+#' test_data$age_group <- age_breaks(test_data$age)
+#'
+#' # Hooray!
+#' table(test_data$age_group)
+#'
+#' # We could do the above by simply passing in the dates of birth
+#' test_data$age_group <- age_breaks(test_data$dob)
+#'
 age_breaks <- function(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf),
                        right = FALSE, ...){
 
@@ -126,6 +142,10 @@ age_breaks <- function(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf),
     }))
 
     factor(x, levels = levs, labels = labs)
+  }
+
+  if(class(x) %in% c("Date", "POSIXct", "POSIXt")){
+    x <- date_to_age(x)
   }
 
   age_lab(cut(x, breaks, right = right, ...))
