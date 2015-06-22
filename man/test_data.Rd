@@ -3,9 +3,10 @@
 \docType{data}
 \name{test_data}
 \alias{test_data}
-\title{This is data to be included in my package}
+\title{An idealised test data set, for demonstrating some of the functions}
 \description{
-An idealised test data set, for demonstrating some of the functions
+An idealised test data set, for demonstrating some of the functions in the
+package
 }
 \author{
 Brendan Rocks \email{rocks.brendan@gmail.com}

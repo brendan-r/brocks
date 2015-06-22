@@ -19,7 +19,21 @@ to \code{NA}?}
 A \code{data.frame}, less non-varying variables.
 }
 \description{
-\code{kill_cols} accepts a \code{\link{data.frame}} or \code{\link{matrix}}, and returns another, containg only the columns with more than one unique non-missing value. By default, empty strings ("") are converted to \code{NA}, and not considered informative.
+\code{kill_cols} accepts a \code{\link{data.frame}} or \code{\link{matrix}},
+and returns another, containg only the columns with more than one unique
+non-missing value. By default, empty strings ("") are converted to \code{NA},
+and not considered informative.
+}
+\examples{
+# If we filter test_data down to just those in a particular income group,
+# income groups no longer vary
+
+data(test_data)
+test_data2 <- test_data[test_data$income == '$0 - $40k',]
+
+# Now kill_cols will remove the income column, as it no longer varies
+
+kill_cols(test_data2)
 }
 \author{
 Brendan Rocks \email{rocks.brendan@gmail.com}

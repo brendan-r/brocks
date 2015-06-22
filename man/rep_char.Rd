@@ -32,8 +32,8 @@ desc <- c("\\n", "first : 1st\\n", "second : 2nd\\n", "third : 3rd\\n",
 # However, the varying lengths make them look a little awkward
 cat(desc)
 
-# We can use rep_char to add extra spaces to the strings which are shorter than
-# the longest
+# We can use rep_char to add extra spaces to the strings which are shorter
+# than the longest
 desc_spaced <- paste0(rep_char(times = max(nchar(desc)) - nchar(desc)), desc)
 
 # Much better

@@ -42,7 +42,10 @@ rev_levs <- function(x){
 
 #' Kill off non-informative columns in a data.frame
 #'
-#' \code{kill_cols} accepts a \code{\link{data.frame}} or \code{\link{matrix}}, and returns another, containg only the columns with more than one unique non-missing value. By default, empty strings ("") are converted to \code{NA}, and not considered informative.
+#' \code{kill_cols} accepts a \code{\link{data.frame}} or \code{\link{matrix}},
+#' and returns another, containg only the columns with more than one unique
+#' non-missing value. By default, empty strings ("") are converted to \code{NA},
+#' and not considered informative.
 #'
 #' @name kill_cols
 #' @aliases killcols
@@ -52,6 +55,18 @@ rev_levs <- function(x){
 #' @return A \code{data.frame}, less non-varying variables.
 #' @export
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @examples
+#'
+#' # If we filter test_data down to just those in a particular income group,
+#' # income groups no longer vary
+#'
+#' data(test_data)
+#' test_data2 <- test_data[test_data$income == '$0 - $40k',]
+#'
+#' # Now kill_cols will remove the income column, as it no longer varies
+#'
+#' kill_cols(test_data2)
+#'
 kill_cols <- function(x, empty_strings = TRUE){
   n.lev <- function(x){
     if(empty_strings)
@@ -132,7 +147,9 @@ age_breaks <- function(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf),
 #' @return \code{\link{numeric}}. An estimate of the sample's standard error.
 #' @export
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
-#' @references {Agresti, A., & Coull, B. A. (1998). Approximate is better than "exact" for interval estimation of binomial proportions. \emph{The American Statistician}, 52(2), 119-126.}
+#' @references {Agresti, A., & Coull, B. A. (1998). Approximate is better than
+#'   "exact" for interval estimation of binomial proportions. \emph{The American
+#'   Statistician}, 52(2), 119-126.}
 #' @examples
 #' ac_se(as.logical(round(runif(10))))
 ac_se <- function(logical_var, wt = 2){
@@ -172,8 +189,8 @@ ac_se <- function(logical_var, wt = 2){
 #' # However, the varying lengths make them look a little awkward
 #' cat(desc)
 #'
-#' # We can use rep_char to add extra spaces to the strings which are shorter than
-#' # the longest
+#' # We can use rep_char to add extra spaces to the strings which are shorter
+#' # than the longest
 #' desc_spaced <- paste0(rep_char(times = max(nchar(desc)) - nchar(desc)), desc)
 #'
 #' # Much better
@@ -475,9 +492,8 @@ refactor_list <- function(x, consolidate = FALSE, file = NULL){
     spaces1 <- rep_char(" ", max(nchar(vals1)) - nchar(vals1))
     spaces2 <- rep_char(" ", max(nchar(vals2)) - nchar(vals2))
 
-    strings <- paste0(
-      start, vals1, mid1, spaces1, vals_2_paren, vals2, vals_2_paren, spaces2, end
-    )
+    strings <- paste0(start, vals1, mid1, spaces1, vals_2_paren, vals2,
+                      vals_2_paren, spaces2, end)
 
     # Lose the comma from the last one
     strings[length(strings)] <- gsub("\\),", ")", strings[length(strings)])
@@ -557,9 +573,10 @@ char_cols <- function(x, all = FALSE){
 }
 
 
-#' This is data to be included in my package
-#'
 #' An idealised test data set, for demonstrating some of the functions
+#'
+#' An idealised test data set, for demonstrating some of the functions in the
+#' package
 #'
 #' @name test_data
 #' @docType data

@@ -28,6 +28,8 @@ ac_se(as.logical(round(runif(10))))
 Brendan Rocks \email{rocks.brendan@gmail.com}
 }
 \references{
-{Agresti, A., & Coull, B. A. (1998). Approximate is better than "exact" for interval estimation of binomial proportions. \emph{The American Statistician}, 52(2), 119-126.}
+{Agresti, A., & Coull, B. A. (1998). Approximate is better than
+  "exact" for interval estimation of binomial proportions. \emph{The American
+  Statistician}, 52(2), 119-126.}
 }
 
