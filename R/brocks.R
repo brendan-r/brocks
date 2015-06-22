@@ -131,6 +131,40 @@ age_breaks <- function(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf),
   age_lab(cut(x, breaks, right = right, ...))
 }
 
+#' Convert Dates to Ages
+#'
+#' Convert dates to ages.
+#'
+#' @name date_to_age
+#' @param dob 'Date of Birth'
+#' @param refdate Reference date to compare \code{x} with. Defaults to the
+#'   current date
+#' @return Numeric, 'whole number' ages
+#' @export
+#' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @examples
+#' # The argument can take a single age
+#' date_to_age("1952-04-29")
+#'
+#' # Or a whole vector!
+#' data(test_data)
+#' test_data$age <- date_to_age(test_data$dob)
+#'
+#' # Historical ages, too. How old were these people yesterday?
+#'
+#' test_data$age <- date_to_age(test_data$dob, Sys.Date() - 1)
+#'
+date_to_age <- function(dob, refdate = Sys.time()){
+  # Supressing warnings here owing to a (now fixed) bug in lubridate
+  # https://github.com/hadley/lubridate/pull/244
+  suppressWarnings(
+    lubridate::year(
+      lubridate::as.period(lubridate::new_interval(dob, refdate), unit = "year")
+    )
+  )
+}
+
+
 
 #' Agresti-Coull Intervals
 #'
