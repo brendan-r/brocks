@@ -358,10 +358,38 @@ html_tri <- function(
 #   paste0(ifelse(x > 0, "+", ""), round(x * 100, ...))
 # }
 #
-# # A vectorized version of switch
-# vswitch <- function(EXPR, ...){
-#   unlist(lapply(EXPR, function(x) switch(x, ...)))
-# }
+
+
+#' A vectorized version of switch
+#'
+#' A vectorized version of \code{\link{switch}}.
+#'
+#' @param EXPR As in \code{switch}, an expression which evaluated to a number or
+#'   character string. However, in \code{vswitch}, there can be more than one.
+#'
+#' @param ... Passed to \code{switch}
+#'
+#' @export
+#' @name vswitch
+#' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @examples
+#'
+#' # The usual version of 'switch' works perfectly with one value
+#' x <- "a"
+#' switch(x, a = 1, b = 2, c = 3)
+#'
+#' # But not with more than one
+#' x <- letters[1:3]
+#' \dontrun{switch(x, a = 1, b = 2, c = 3)}
+#'
+#' # vswitch works well where you'd like to 'switch' more than one thing
+#' x <- letters[1:3]
+#' vswitch(x, a = 1, b = 2, c = 3)
+#'
+#'
+vswitch <- function(EXPR, ...){
+  unlist(lapply(EXPR, function(x) switch(x, ...)))
+}
 
 
 
