@@ -416,20 +416,66 @@ html_tri <- function(
 }
 
 
+#' Miscellaneous Number Formatting Functions
+#'
+#' @description {
+#'   Sometimes (for example when illustrating differences), it can be useful for
+#'   positive numbers to be prefixed by a + sign, just as negative numbers are
+#'   with a - sign. The following are a few (very simple) wrapper functions
+#'   which do this.
+#'
+#'   \describe{
+#'     \item{\bold{\code{plus_minus}}}{ Is a wrapper for \code{\link{round}},
+#'       which also \code{\link{paste}}s a + sign before positive numbers
+#'     }
+#'     \item{\bold{\code{plus_minus_percent}}}{ Does the same as above, but
+#'       multiplies by 100 first, and adds a % sign to the end of the number
+#'     }
+#'     \item{\bold{\code{plus_minus_nps}}}{ Does the same as the above, but
+#'       without the percentage sign
+#'     }
+#'     \item{\bold{\code{format_nps}}}{ Does the same as the above, but without
+#'       the + suffix for positive numbers
+#'     }
+#'   }
+#' }
+#'
+#' @param x \code{\link{numeric}} data to format
+#' @param ... Passed to \code{\link{round}}
+#'
+#' @return \code{\link{character}}.
+#'
+#' @export
+#' @name misc_br_num_formats
+#' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @examples
+#'
+#' plus_minus(-3:3)
+#' plus_minus_percent(runif(6) - .5)
+#' plus_minus_nps(runif(6) - .5)
+#' format_nps(runif(6) - .5)
+#'
+plus_minus <- function(x, ...){
+  paste0(ifelse(x > 0, "+", ""), round(x, ...))
+}
 
-# plus_minus <- function(x, ...){
-#   paste0(ifelse(x > 0, "+", ""), round(x, ...))
-# }
-#
-# plus_minus_percent <- function(x, ...){
-#   paste0(ifelse(x > 0, "+", ""), round(x * 100, ...), "%")
-# }
-#
-# plus_minus_nps <- function(x, ...){
-#   paste0(ifelse(x > 0, "+", ""), round(x * 100, ...))
-# }
-#
+#' @name misc_br_num_formats
+#' @export
+plus_minus_percent <- function(x, ...){
+  paste0(ifelse(x > 0, "+", ""), round(x * 100, ...), "%")
+}
 
+#' @name misc_br_num_formats
+#' @export
+plus_minus_nps <- function(x, ...){
+  paste0(ifelse(x > 0, "+", ""), round(x * 100, ...))
+}
+
+#' @name misc_br_num_formats
+#' @export
+format_nps <- function(x, ...){
+  paste0(round(x * 100, ...))
+}
 
 #' A vectorized version of switch
 #'
