@@ -544,17 +544,79 @@ refactor <- function(x, new_values, throw_error = FALSE){
   mapvalues(x, from, to)
 }
 
-# x <- c("a", "b", "c")
-#
-# new_values <- list(
-#   c("a", "A"),
-#   c("c", "C")
-# )
-#
-# [1] "A" "b" "C"
 
-
-# You should file export to a csv
+#' Produce a lookup for refactor()
+#'
+#' @description {
+#'   The \code{refactor_list} command is a helper function for
+#'   \code{\link{refactor}}. It prints the \code{\bold{R}} code requiqred for a
+#'   'lookup' to the console, for inclusion in data preparation/cleaning scripts
+#'   (perhaps after a bit of editing!).
+#'
+#'   For vary large lookups, it might make more sense to pass the lookup to
+#'   \code{\link{refactor}} using a file. You can write the lookup
+#'   to a \code{.csv} file by supplying a path/name to the the \code{file}
+#'   argument.
+#'
+#'   To try and make the process less laborious, \code{refactor_list} also has
+#'   a \code{consolidate} parameter. If set to \code{TRUE}, the lookup generated
+#'   will pass the 'TO' values through \code{\link{consolidate_vals}}, hopefully
+#'   consoldating factor levels which are different for small formatting reasons
+#'   in to one. See the \code{\link{consolidate_vals}} documentation for
+#'   details.
+#'
+#'   For a demonstration of how \code{\link{refactor}} and \code{refactor_list}
+#'   work together, see the package vignette, with:
+#'
+#'   \code{vignette('brocks')}
+#' }
+#'
+#' @param x A \code{\link{factor}} (or \code{\link{character}}) variable
+#' @param consolidate \code{\link{logical}}. Should the 'TO' values be passed
+#'   through \code{\link{consolidate_vals}} in an automated attempt to clean
+#'   them up?
+#' @param file A writable file path. If supplied, the lookup will be written
+#'   out to a two column .csv file, as opposed to written to the console. The
+#'   file produced can be passed to the file argument in \code{\link{refactor}}
+#'
+#' @return Nothing. Prints to the console/terminal with \code{\link{cat}}.
+#'
+#' @export
+#' @name refactor_list
+#' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @seealso \code{\link{refactor}}, the function which \code{rfeactor_list}
+#'   supports
+#' @examples
+#' # Let's tidy up the gender variable in test_data
+#' data(test_data)
+#' table(test_data$gender)
+#'
+#' # Passing the gender variable to refactor_list, will generate the R code we
+#' # need to create a lookup for it in our data-cleaning script! Setting
+#' # consolidate to TRUE will do some of the work for us.
+#'
+#' refactor_list(test_data$gender, consolidate = TRUE)
+#'
+#' # At this point you'd take the code generated and itegrate it into your
+#' # script. Here's one I made earlier. We can pass it to refactor, and our
+#' # factor variable is now tidy!
+#'
+#' new_vals <- list(
+#'   # FROM      TO
+#'   c("",        NA     ),
+#'   c("<NA>",    NA     ),
+#'   c("F",      "female"),
+#'   c("Female", "female"),
+#'   c("m",      "male"  ),
+#'   c("M",      "male"  ),
+#'   c("Male",   "male"  ),
+#'   c("Man",    "male"  ),
+#'   c("Woman",  "female"),
+#'   c("n/a",     NA     )
+#' )
+#'
+#' test_data$gender <- refactor(test_data$gender, new_vals)
+#'
 refactor_list <- function(x, consolidate = FALSE, file = NULL){
   vals1 <- names(table(x))
 

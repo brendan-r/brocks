@@ -23,4 +23,10 @@ Change Factor Levels Using List Lookups
 \author{
 Brendan Rocks \email{rocks.brendan@gmail.com}
 }
+\seealso{
+\code{\link{refactor_list}} for generating code to feed to
+  \code{new_values} in scripts. Other functions which aim to make factor
+  munging less painful are the recode function in the car package, and
+  mapvalues in plyr
+}
 
