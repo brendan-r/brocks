@@ -524,6 +524,10 @@ vswitch <- function(EXPR, ...){
 #' @export
 #' @name refactor
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
+#' @seealso \code{\link{refactor_list}} for generating code to feed to
+#'   \code{new_values} in scripts. Other functions which aim to make factor
+#'   munging less painful are the \code{\link[car]{recode}} function in the car
+#'   package, and \code{\link[plyr]{mapvalues}} in plyr
 refactor <- function(x, new_values, throw_error = FALSE){
 
   valid <- all(

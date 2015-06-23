@@ -87,6 +87,7 @@ test_data$gender <- refactor(test_data$gender, new_vals)
 ```
 
 This approach has several advantages:
+
 * Visually distinctive and *complete*
   * you don't have to scour a file to work out where all the changes to a factor level (should) happen
 * It's so *intellectually impoverished*
