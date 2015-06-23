@@ -10,7 +10,7 @@ refactor_list(x, consolidate = FALSE, file = NULL)
 \item{x}{A \code{\link{factor}} (or \code{\link{character}}) variable}
 
 \item{consolidate}{\code{\link{logical}}. Should the 'TO' values be passed
-through \code{\link{consolidate_vals}} in an automated attempt to clean
+through \code{\link{consolidate_values}} in an automated attempt to clean
 them up?}
 
 \item{file}{A writable file path. If supplied, the lookup will be written
@@ -23,7 +23,7 @@ Nothing. Prints to the console/terminal with \code{\link{cat}}.
 \description{
 {
   The \code{refactor_list} command is a helper function for
-  \code{\link{refactor}}. It prints the \code{\bold{R}} code requiqred for a
+  \code{\link{refactor}}. It prints the \bold{\code{R}} code requiqred for a
   'lookup' to the console, for inclusion in data preparation/cleaning scripts
   (perhaps after a bit of editing!).
 
@@ -34,9 +34,9 @@ Nothing. Prints to the console/terminal with \code{\link{cat}}.
 
   To try and make the process less laborious, \code{refactor_list} also has
   a \code{consolidate} parameter. If set to \code{TRUE}, the lookup generated
-  will pass the 'TO' values through \code{\link{consolidate_vals}}, hopefully
+  will pass the 'TO' values through \code{\link{consolidate_values}}, hopefully
   consoldating factor levels which are different for small formatting reasons
-  in to one. See the \code{\link{consolidate_vals}} documentation for
+  in to one. See the \code{\link{consolidate_values}} documentation for
   details.
 
   For a demonstration of how \code{\link{refactor}} and \code{refactor_list}

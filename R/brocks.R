@@ -553,7 +553,7 @@ refactor <- function(x, new_values, throw_error = FALSE){
 #'
 #' @description {
 #'   The \code{refactor_list} command is a helper function for
-#'   \code{\link{refactor}}. It prints the \code{\bold{R}} code requiqred for a
+#'   \code{\link{refactor}}. It prints the \bold{\code{R}} code requiqred for a
 #'   'lookup' to the console, for inclusion in data preparation/cleaning scripts
 #'   (perhaps after a bit of editing!).
 #'
@@ -564,9 +564,9 @@ refactor <- function(x, new_values, throw_error = FALSE){
 #'
 #'   To try and make the process less laborious, \code{refactor_list} also has
 #'   a \code{consolidate} parameter. If set to \code{TRUE}, the lookup generated
-#'   will pass the 'TO' values through \code{\link{consolidate_vals}}, hopefully
+#'   will pass the 'TO' values through \code{\link{consolidate_values}}, hopefully
 #'   consoldating factor levels which are different for small formatting reasons
-#'   in to one. See the \code{\link{consolidate_vals}} documentation for
+#'   in to one. See the \code{\link{consolidate_values}} documentation for
 #'   details.
 #'
 #'   For a demonstration of how \code{\link{refactor}} and \code{refactor_list}
@@ -577,7 +577,7 @@ refactor <- function(x, new_values, throw_error = FALSE){
 #'
 #' @param x A \code{\link{factor}} (or \code{\link{character}}) variable
 #' @param consolidate \code{\link{logical}}. Should the 'TO' values be passed
-#'   through \code{\link{consolidate_vals}} in an automated attempt to clean
+#'   through \code{\link{consolidate_values}} in an automated attempt to clean
 #'   them up?
 #' @param file A writable file path. If supplied, the lookup will be written
 #'   out to a two column .csv file, as opposed to written to the console. The
@@ -626,7 +626,7 @@ refactor_list <- function(x, consolidate = FALSE, file = NULL){
 
   if(consolidate){
     # Run the to values through consolidate_values
-    vals2 <- consolidate_values(vals)
+    vals2 <- consolidate_values(vals1)
     vals <- c(vals1, vals2)
   } else{
     # If you're not consolidting values, then the from and to values will be the
