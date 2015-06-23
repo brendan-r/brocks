@@ -14,7 +14,7 @@
 
 ```R
 # install.packages("devtools")
-devtools::install_github("brendan-R/brocks)
+devtools::install_github("brendan-R/brocks")
 ```
 
 ## License
