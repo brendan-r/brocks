@@ -1,3 +1,73 @@
+sys_open <- function (f){
+  # Taken from:
+  #   Package: pander
+  #   Maintainer: Gergely Daróczi <daroczig@rapporter.net>
+  #     Title: An R Pandoc Writer
+  #   Version: 0.5.2
+
+  if (missing(f))
+    stop("No file to open!")
+  f <- path.expand(f)
+  if (!file.exists(f))
+    stop("File not found!")
+  if (grepl("w|W", .Platform$OS.type)) {
+    shell.exec(f)
+  }
+  else {
+    if (grepl("darwin", version$os))
+      system(paste(shQuote("open"), shQuote(f)), wait = FALSE,
+             ignore.stderr = TRUE)
+    else system(paste(shQuote("/usr/bin/xdg-open"), shQuote(f)),
+                wait = FALSE, ignore.stdout = TRUE)
+  }
+}
+
+filenameise <- function(x){
+  gsub("_$|^_", "",
+       gsub("_+", "_", gsub("[[:space:]]|[[:punct:]]", "_", tolower(x)))
+  )
+}
+
+filenameize <- filenameise
+
+new_post <- function(title = "new_post", draft = TRUE){
+
+  filename <- paste(Sys.Date(), filenameise(title), ".Rmd")
+
+  file.copy("post_skeleton.Rmd", filename)
+
+  sys_open(file)
+}
+
+publish_post <- function(filename = NULL, yaml = TRUE, drafts_dir = "_drafts",
+                         posts_dir = "_posts"){
+
+  drafts <- list.files(drafts_dir)
+
+  if(length(drafts > 1)){
+    stop("No files in the '_drafts' folder")
+  }
+
+  cat("Which draft post would you like moved to posts?")
+  selection <- menu(drafts)
+
+  file.rename(
+    file.path(drafts_dir, drafts[selection]),
+    file.path(posts_dir, drafts[selection])
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
 #
 #
 #
