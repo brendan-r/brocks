@@ -1,135 +1,5 @@
-sys_open <- function (f){
-  # Taken from:
-  #   Package: pander
-  #   Maintainer: Gergely Daróczi <daroczig@rapporter.net>
-  #     Title: An R Pandoc Writer
-  #   Version: 0.5.2
-
-  if (missing(f))
-    stop("No file to open!")
-  f <- path.expand(f)
-  if (!file.exists(f))
-    stop("File not found!")
-  if (grepl("w|W", .Platform$OS.type)) {
-    shell.exec(f)
-  }
-  else {
-    if (grepl("darwin", version$os))
-      system(paste(shQuote("open"), shQuote(f)), wait = FALSE,
-             ignore.stderr = TRUE)
-    else system(paste(shQuote("/usr/bin/xdg-open"), shQuote(f)),
-                wait = FALSE, ignore.stdout = TRUE)
-  }
-}
-
-filenameise <- function(x){
-  gsub("_$|^_", "",
-       gsub("_+", "_", gsub("[[:space:]]|[[:punct:]]", "_", tolower(x)))
-  )
-}
-
-filenameize <- filenameise
-
-new_post <- function(title = "new_post", draft = TRUE){
-
-  filename <- paste(Sys.Date(), filenameise(title), ".Rmd")
-
-  file.copy("post_skeleton.Rmd", filename)
-
-  sys_open(file)
-}
-
-publish_post <- function(filename = NULL, yaml = TRUE, drafts_dir = "_drafts",
-                         posts_dir = "_posts"){
-
-  drafts <- list.files(drafts_dir)
-
-  if(length(drafts > 1)){
-    stop("No files in the '_drafts' folder")
-  }
-
-  cat("Which draft post would you like moved to posts?")
-  selection <- menu(drafts)
-
-  file.rename(
-    file.path(drafts_dir, drafts[selection]),
-    file.path(posts_dir, drafts[selection])
-  )
-}
 
 
-
-
-
-
-
-
-
-
-
-
-#
-#
-#
-#
-# #' Reasonably sensible date conversion, from various formats common to Satmetrix systems and Excel
-# #'
-# #' R's standard \code{\link{Date}} format is the ISO 8601 international standard (e.g. \code{'2012-12-25'}), which is also used by Xperience
-# #' (and works very well for a transatlantic company like ours). 11x and Excel have varying defaults, and in addition, odd formats are often in sample files.
-# #' This function takes care of common date formats which I've come accross, though if you run
-# #' into something unusual - please do sense check results before performing analyses! If data are already in \code{'2012-12-25'} or \code{'2012/12/25'}
-# #' format, you can simply use \code{\link{as.Date}}. For odd combinations you may want to use a more flexible function, such as \code{\link{strptime}}.
-# #'
-# #' @name Date.conv
-# #' @aliases Date.conv
-# #' @param x a \code{\link{vector}}, containing date or time information
-# #' @note Date formats currently converted:
-# #' Standard US windows, e.g. mm/dd/yyyy
-# #' Standard UK windows, e.g. dd/mm/yyyy
-# #' ISO UK windows, e.g. dd/mm/yyyy
-# #' All of the above with times on (though these will be killed off), and with or without decimal numbers (e.g. June as '6' or '06').
-# #' @return Hopefully, a vector of \code{\link{Date}} data.
-# #' @author Brendan Rocks \email{brendan.rocks@@satmetrix.com}
-# #' @export
-# #' @examples
-# #' # A vector of dates formatted with times, and in am ambigious (US) format
-# #' x <- c("3/8/2011 2:10:35 AM", "1/25/2010 4:08:52 AM", "9/15/2009 6:13:59 AM", "6/29/2010 6:10:40 AM", "11/15/2011 2:04:19 AM")
-# #'
-# #' #Success
-# #' Date.conv(x)
-# #'
-# #' # A vector of dates formatted with times, and in am ambigious (UK) format
-# #' x <- c("8/3/2011 2:10:35 AM", "25/1/2010 4:08:52 AM", "15/9/2009 6:13:59 AM", "29/6/2010 6:10:40 AM", "15/11/2011 2:04:19 AM")
-# #'
-# #' #Success
-# #' Date.conv(x)
-# Date.conv <- function(x){
-#   #Differnt Date formats this will handle:
-#   # Standard US windows, e.g. mm/dd/yyyy
-#   # Standard UK windows, e.g. dd/mm/yyyy
-#   # ISO UK windows, e.g. dd/mm/yyyy
-#   #All of the above with times on (though these will be killed off)
-#   Pc.na <- function(x) mean(is.na(x))
-#   dates <- list()
-#   #Standard US format without decimal numbers fo days or months
-#   dates[[1]] <- as.Date(gsub(" ...+","",x), format="%m/%u/%Y")
-#   #Standard US format with slashes, without decimal numbers fo days or months
-#   dates[[2]] <- as.Date(gsub(" ...+","",x), format="%m/%d/%Y")
-#   #Standard UK format
-#   dates[[3]] <- as.Date(gsub(" ...+","",x), format="%d/%m/%Y")
-#   #Standard UK format with slashes, without decimal numbers fo days or months
-#   dates[[4]] <- as.Date(gsub(" ...+","",x), format="%u/%m/%Y")
-#   #Standard ISO format
-#   dates[[5]] <- as.Date(gsub(" ...+","",x), format="%F")
-#
-#   #Return the one with the lowest number of NAs generated
-#   return(dates[rank(unlist(lapply(dates, FUN=Pc.na))) == 1][[1]])
-# }
-#
-#
-#
-#
-#
 #
 #
 # # Untested, but would be useful!
@@ -184,3 +54,21 @@ publish_post <- function(filename = NULL, yaml = TRUE, drafts_dir = "_drafts",
 #
 #
 #
+#
+# publish_post <- function(filename = NULL, yaml = TRUE, drafts_dir = "_drafts",
+#                          posts_dir = "_posts"){
+#
+#   drafts <- list.files(drafts_dir)
+#
+#   if(length(drafts > 1)){
+#     stop("No files in the '_drafts' folder")
+#   }
+#
+#   cat("Which draft post would you like moved to posts?")
+#   selection <- menu(drafts)
+#
+#   file.rename(
+#     file.path(drafts_dir, drafts[selection]),
+#     file.path(posts_dir, drafts[selection])
+#   )
+# }
