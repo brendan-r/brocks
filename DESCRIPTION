@@ -12,7 +12,8 @@ License: MIT + file LICENSE
 Imports:
     stringr,
     assertthat,
-    lubridate
+    lubridate,
+    servr
 Suggests:
     testthat,
     knitr
