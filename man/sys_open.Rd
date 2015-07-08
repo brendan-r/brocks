@@ -17,4 +17,11 @@ Open a file in the operating system, using it's default program.
 \code{sys_open} should work on Ubuntu (and other Linux variants), OSX and
 Windows.
 }
+\author{
+Based very heavily on the function \code{openFileInOS} from the
+  package \code{pander} (v0.5.2), written by Gergely Daroczi
+  (\email{daroczig@rapporter.net}), itself based on the \code{convert}
+  function in the package \code{ascii}, written by David Hajage
+  (\email{dhajage@gmail.com}).
+}
 

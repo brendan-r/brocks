@@ -7,14 +7,14 @@
 #' @param f The path of the file to open
 #' @return Nothing. Used for it's side effect.
 #'
+#' @author Based very heavily on the function \code{openFileInOS} from the
+#'   package \code{pander} (v0.5.2), written by Gergely Daroczi
+#'   (\email{daroczig@@rapporter.net}), itself based on the \code{convert}
+#'   function in the package \code{ascii}, written by David Hajage
+#'   (\email{dhajage@@gmail.com}).
+#'
 #' @export
 sys_open <- function (f){
-  # Taken from:
-  #   Package: pander
-  #   Maintainer: Gergely Daróczi <daroczig@rapporter.net>
-  #     Title: An R Pandoc Writer
-  #   Version: 0.5.2
-
   if (missing(f))
     stop("No file to open!")
   f <- path.expand(f)
@@ -46,8 +46,8 @@ sys_open <- function (f){
 #' @return \code{character}
 #'
 #' @export
-#' @aliases filenameize
-filenameise <- function(x, sep_char = "_", ext = ""){
+#' @aliases filenamize
+filenamise <- function(x, sep_char = "_", ext = ""){
   paste0(
     gsub(
       paste0(sep_char, "$|^", sep_char), "",
@@ -61,8 +61,8 @@ filenameise <- function(x, sep_char = "_", ext = ""){
 }
 
 #' @export
-#' @name filenameise
-filenameize <- filenameise
+#' @name filenamise
+filenamize <- filenamise
 
 
 #' File Structure for a Jekyll Blog Post
@@ -76,7 +76,7 @@ filenameize <- filenameise
 #' @details {
 #'   \code{new_post} will create a .R file, and a .Rmd file (by default in a
 #'   subdirectory), with names created by running \code{title} through
-#'   \code{\link{filenameise}}. The .R file will contain a short note mentioning
+#'   \code{\link{filenamise}}. The .R file will contain a short note mentioning
 #'   that it accompanies the .Rmd file, which will contain the same text as the
 #'   file supplied by \code{skeleton_post} paramter. Both files will be opened
 #'   using \code{\link{sys_open}}.
@@ -87,7 +87,7 @@ new_post <- function(title = "new post", dir = "_source", subdir = TRUE,
                      skeleton_file = "skeleton_post"){
 
   # Sanitise the post title
-  fname <- filenameise(title, sep_char = "-")
+  fname <- filenamise(title, sep_char = "-")
 
   if(subdir){
     fpath <- file.path(dir, fname)
@@ -132,7 +132,7 @@ new_post <- function(title = "new post", dir = "_source", subdir = TRUE,
 #' @export
 blog_run <- function(
   input  = c(".", list.dirs("_source")),
-  output = c(".", rep("_posts", length(list.dirs("_source")) - 1)),
+  output = c(".", rep("_posts", length(list.dirs("_source")))),
   ...
 ){
   servr::jekyll(input = input, output = output, ...)

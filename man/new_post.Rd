@@ -24,7 +24,7 @@ File Structure for a Jekyll Blog Post
 {
   \code{new_post} will create a .R file, and a .Rmd file (by default in a
   subdirectory), with names created by running \code{title} through
-  \code{\link{filenameise}}. The .R file will contain a short note mentioning
+  \code{\link{filenamise}}. The .R file will contain a short note mentioning
   that it accompanies the .Rmd file, which will contain the same text as the
   file supplied by \code{skeleton_post} paramter. Both files will be opened
   using \code{\link{sys_open}}.
