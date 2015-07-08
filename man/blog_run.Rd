@@ -5,7 +5,7 @@
 \title{Serve or Compile a Jekyll Blog}
 \usage{
 blog_run(input = c(".", list.dirs("_source")), output = c(".", rep("_posts",
-  length(list.dirs("_source")) - 1)), ...)
+  length(list.dirs("_source")))), ...)
 }
 \arguments{
 \item{input}{passed to servr::\code{\link{jekyll}}}
