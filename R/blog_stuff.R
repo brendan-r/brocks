@@ -84,7 +84,7 @@ filenamize <- filenamise
 #'
 #' @export
 new_post <- function(title = "new post", dir = "_source", subdir = TRUE,
-                     skeleton_file = "skeleton_post"){
+                     skeleton_file = ".skeleton_post"){
 
   # Sanitise the post title
   fname <- filenamise(title, sep_char = "-")
