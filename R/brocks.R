@@ -832,12 +832,12 @@ smx_watermark <- function(png_path = "~/projects/smx_logos/greyscale_top.png"){
 #' @export
 theme_br <- function(){
   # You should :: this up once you're happy with it
-  requireNamespace(ggplot2)
+  requireNamespace("ggplot2")
   theme_bw() +
     theme(
       legend.position    = c(0.85, 0.15),
-      text = element_text(family = "Overpass"),
-      strip.text.x       = element_text(family = "Overpass", colour = 'white'),
+      text = element_text(family = "Ubuntu"),
+      strip.text.x       = element_text(family = "Ubuntu", colour = 'white'),
       legend.background  = element_rect(fill=scales::alpha('white', 0))#,
       #     strip.background   =
       #       element_rect(
