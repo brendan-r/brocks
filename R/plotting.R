@@ -102,3 +102,19 @@ theme_br <- function(){
       #       )
     )
 }
+
+#' ggplot2 categorical colour hues
+#'
+#' Generate the colours which \code{ggplot2} would, given a certain number of
+#' categories.
+#'
+#' @param n The number of colours to return
+#'
+#' @author John Colby (taken from: \url{https://stackoverflow.com/questions/8197559/emulate-ggplot2-default-color-palette})
+#' @export
+#' @examples
+#' barplot(1:10, col = gg_colour_hue(10))
+gg_colour_hue <- function(n) {
+  hues = seq(15, 375, length=n+1)
+  hcl(h=hues, l=65, c=100)[1:n]
+}
