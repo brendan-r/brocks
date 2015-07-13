@@ -5,7 +5,7 @@
 \title{File Structure for a Jekyll Blog Post}
 \usage{
 new_post(title = "new post", dir = "_source", subdir = TRUE,
-  skeleton_file = "skeleton_post")
+  skeleton_file = ".skeleton_post")
 }
 \arguments{
 \item{title}{The title of the blog post}
