@@ -11,7 +11,7 @@
 
 ## Installation
 
-brocks depends on the development version of [`lubridate`](https://github.com/hadley/lubridate) (bugfix for leap years!). This means that it fails CI builds, however, it should work locally, with:
+brocks depends on the development version of [`lubridate`](https://github.com/hadley/lubridate) (bugfix for leap years!). This means that it fails appveyor CI builds, however, it should work locally, with:
 
 ```R
 # install.packages("devtools")
