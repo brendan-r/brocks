@@ -257,7 +257,7 @@ char_cols <- function(x, all = TRUE){
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
 consolidate_values <- function(
   x, case = "lower",
-  na_regex = "no info*|don't know|<na>|#na|n/a|^$|^[[:space:]]+$"
+  na_regex = "no info*|don't know|<na>|#na|n/a|^[[:space:]]*$"
 ){
   case_fun <- switch(case, "lower" = tolower, "upper" = toupper)
   # You should change the encoding here!

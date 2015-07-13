@@ -5,7 +5,7 @@
 \title{Attempt to Rationalise a Factor Variable (using simple rules)}
 \usage{
 consolidate_values(x, case = "lower",
-  na_regex = "no info*|don't know|<na>|#na|n/a|^$|^[[:space:]]+$")
+  na_regex = "no info*|don't know|<na>|#na|n/a|^[[:space:]]*$")
 }
 \arguments{
 \item{x}{The \code{\link{factor}} variable which you'd like to consolidate
