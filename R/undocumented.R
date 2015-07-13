@@ -1,23 +1,13 @@
 
 
-#
-#
-# # Untested, but would be useful!
-# # example usage ggplot() + smx_watermark() + geom_line() ...
-# smx_watermark <- function(){
-#   library(png)
-#   library(grid)
-#   # Insert something to write the rasterGrob to a variable within the package
-#   # and just use that, if it exists (otherwise, load from disk)
-#   img <- readPNG("~/projects/smx_logos/greyscale_top.png")
-#   g   <- rasterGrob(img, interpolate=TRUE)
-#   annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
-# }
-#
-# # You should put id.na/id_na in here!
-# # Import a version of gdata::format_bytes
-#
-#
+
+
+
+
+# You should put id.na/id_na in here!
+# Import a version of gdata::format_bytes
+
+
 #
 #
 #

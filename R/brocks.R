@@ -813,6 +813,19 @@ gg_footnote <- function(p, text = "This is a footnote", detect_font = TRUE,
   )
 }
 
+#' Add a watermark to a plot
+#'
+#' @param png_path A path to a valid png file to use for the watermark
+#'
+#' @export
+smx_watermark <- function(png_path = "~/projects/smx_logos/greyscale_top.png"){
+  # Insert something to write the rasterGrob to a variable within the package
+  # and just use that, if it exists (otherwise, load from disk)
+
+  img <- png::readPNG(png_path)
+  g   <- grid::rasterGrob(img, interpolate=TRUE)
+  ggplot2::annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
+}
 
 
 #' An idealised test data set, for demonstrating some of the functions
