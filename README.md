@@ -11,9 +11,11 @@
 
 ## Installation
 
+brocks depends on the development version of [`lubridate`](https://github.com/hadley/lubridate) (bugfix for leap years!). This means that it fails CI builds, however, it should work locally, with:
 
 ```R
 # install.packages("devtools")
+devtools::install_github("hadley/lubridate")
 devtools::install_github("brendan-R/brocks")
 ```
 
