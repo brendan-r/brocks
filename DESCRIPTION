@@ -18,7 +18,8 @@ Imports:
     RGraphics,
     grid,
     png,
-    ggplot2
+    ggplot2,
+    scales
 Suggests:
     testthat,
     knitr

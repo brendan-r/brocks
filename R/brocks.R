@@ -827,6 +827,26 @@ smx_watermark <- function(png_path = "~/projects/smx_logos/greyscale_top.png"){
   ggplot2::annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
 }
 
+#' Brendan's ggplot2 theme
+#'
+#' @export
+theme_br <- function(){
+  # You should :: this up once you're happy with it
+  requireNamespace(ggplot2)
+  theme_bw() +
+    theme(
+      legend.position    = c(0.85, 0.15),
+      text = element_text(family = "Overpass"),
+      strip.text.x       = element_text(family = "Overpass", colour = 'white'),
+      legend.background  = element_rect(fill=scales::alpha('white', 0))#,
+      #     strip.background   =
+      #       element_rect(
+      #         colour = primary_cols[2], fill = "#424142"
+      #       )
+    )
+}
+
+
 
 #' An idealised test data set, for demonstrating some of the functions
 #'

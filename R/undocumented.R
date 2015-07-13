@@ -8,29 +8,9 @@
 # Import a version of gdata::format_bytes
 
 
-#
-#
-#
-#
-# # Your ggplot2 theme. You should spend some time on this!
-#
-# # theme_bw() +
-# #   facet_wrap(~title) +
-# #   theme(
-# #     legend.position    = c(0.85, 0.15),
-# #     axis.title.y       = element_text(family = "Ubuntu", size=12),
-# #     axis.title.x       = element_text(family = "Ubuntu", size=12),
-# #     axis.text.y        = element_text(family = "Ubuntu", size=9),
-# #     axis.text.x        = element_text(family = "Ubuntu", size=9),
-# #     panel.grid.minor.x = element_line(colour="grey90", size=0.2),
-# #     strip.text.x       = element_text(family = "Ubuntu", colour = 'white'),
-# #     legend.background  = element_rect(fill=alpha('white', 0)),
-# #     strip.background   =
-# #       element_rect(
-# #         colour = primary_cols[2], fill = "#424142"
-# #       )
-# #   )
-#
+
+
+
 #
 #
 #
