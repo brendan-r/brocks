@@ -19,6 +19,8 @@
 #' @param col Passed to \code{\link{gpar}}
 #' @param fontfamily Passed to \code{\link{gpar}}
 #' @param ... Passed to \code{\link{gpar}}
+#' @author Brendan Rocks \email{rocks.brendan@@gmail.com}, but heavily inspired
+#'   by  Wendi (Alan) Wang: \url{http://statmodeling.com/best-way-to-add-a-footnote-to-a-plot-created-with-ggplot2.html}
 #' @export
 #' @examples
 #' \dontrun{
