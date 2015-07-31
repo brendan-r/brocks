@@ -2,6 +2,7 @@
 
 export(ac_se)
 export(age_breaks)
+export(blog_opts)
 export(blog_run)
 export(char_cols)
 export(consolidate_values)

@@ -137,3 +137,30 @@ blog_run <- function(
 ){
   servr::jekyll(input = input, output = output, ...)
 }
+
+
+
+#' Set some knitr chunk options which may work well for blogging
+#'
+#' A small wrapper around knitr's \code{\link[knitr]{opts_chunk}}$set, with some
+#' defaults which I've found work well for blog posts. All messages from R are
+#' surpressed, and the quality of the plots is increased to 6" X 6" 300 dpi
+#' \code{\link{png}}s.
+#'
+#' @param ... passed to knitr::\code{\link[knitr]{opts_chunk}}$set
+#'
+#' @export
+blog_opts <- function(...){
+  library(knitr)
+  knitr::opts_chunk$set(
+    echo    = FALSE,
+    warning = FALSE,
+    error   = FALSE,
+    message = FALSE,
+    device  = 'png',
+    fig.height = 6,
+    fig.width  = 6,
+    dpi = 300,
+    ...
+  )
+}
