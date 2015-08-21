@@ -307,6 +307,9 @@ scale_strip <- function(x){
     as.numeric(stringr::str_extract(x, "[[:digit:]]+"))
 
   if (is.data.frame(x)){
+    # The tbl_df class seems to break the looping process, which is really bad!
+    # convert to a standard data.frame
+    x <- data.frame(x, check.names = FALSE)
     for(i in 1:ncol(x))
       x[,i] <- ss(x[,i])
   } else if (is.vector(x) | is.factor(x)) {

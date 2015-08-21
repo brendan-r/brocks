@@ -30,6 +30,8 @@ ac_se <- function(logical_var, wt = 2){
 }
 
 
+
+
 #' Repeat a character a variable number of times
 #'
 #' Effectively a version of \code{\link{rep}}, where only once value can be
