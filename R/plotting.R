@@ -64,7 +64,7 @@ gg_footnote <- function(p, text = "This is a footnote", detect_font = TRUE,
 
   gridExtra::arrangeGrob(
     p,
-    sub = grid::textGrob(
+    bottom = grid::textGrob(
       text, x = 0.05, hjust = 0, vjust = 0.5,
       gp = grid::gpar(fontface = fontface, fontsize = fontsize, col = col,
                       fontfamily = fontfamily, ...))
