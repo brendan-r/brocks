@@ -4,11 +4,14 @@
 \alias{new_post}
 \title{File Structure for a Jekyll Blog Post}
 \usage{
-new_post(title = "new post", dir = "_source", subdir = TRUE,
-  skeleton_file = ".skeleton_post")
+new_post(title = "new post", serve = TRUE, dir = "_source",
+  subdir = TRUE, skeleton_file = ".skeleton_post")
 }
 \arguments{
 \item{title}{The title of the blog post}
+
+\item{serve}{Should \code{\link{blog_serve}} be run once the files have
+been set-up? Defatuls to \code{TRUE}.}
 
 \item{dir}{The directory the post (or subdirectory) should reside in}
 

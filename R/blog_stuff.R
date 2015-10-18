@@ -68,6 +68,8 @@ filenamize <- filenamise
 #' File Structure for a Jekyll Blog Post
 #'
 #' @param title The title of the blog post
+#' @param serve Should \code{\link{blog_serve}} be run once the files have
+#'   been set-up? Defatuls to \code{TRUE}.
 #' @param dir The directory the post (or subdirectory) should reside in
 #' @param subdir Should the post live in a subdirectory? Defaults to \code{TRUE}
 #' @param skeleton_file The filepath of a skeleton blog post which will be used
@@ -83,8 +85,8 @@ filenamize <- filenamise
 #' }
 #'
 #' @export
-new_post <- function(title = "new post", dir = "_source", subdir = TRUE,
-                     skeleton_file = ".skeleton_post"){
+new_post <- function(title = "new post", serve = TRUE, dir = "_source",
+                     subdir = TRUE, skeleton_file = ".skeleton_post"){
 
   # Sanitise the post title
   fname <- filenamise(title, sep_char = "-")
@@ -115,29 +117,41 @@ new_post <- function(title = "new post", dir = "_source", subdir = TRUE,
 
   sys_open(r_name)
   sys_open(rmd_name)
-}
 
+  if(serve)
+    blog_serve()
+}
 
 
 #' Serve or Compile a Jekyll Blog
 #'
 #' Serve or Compile a Jekyll Blog. A small wrapper around
-#' servr::\code{\link{jekyll}}, which be default looks for subdirectories witin
-#' the main source directory.
+#' servr::\code{\link{jekyll}}, which by default also looks for subdirectories
+#' witin the main source directory.
 #'
 #' @param input passed to servr::\code{\link{jekyll}}
 #' @param output passed to servr::\code{\link{jekyll}}
 #' @param ... passed to servr::\code{\link{jekyll}}
 #'
 #' @export
-blog_run <- function(
+blog_serve <- function(
   input  = c(".", list.dirs("_source")),
   output = c(".", rep("_posts", length(list.dirs("_source")))),
   ...
 ){
-  servr::jekyll(input = input, output = output, ...)
+  servr::jekyll(input = input, output = output, serve = TRUE, ...)
 }
 
+
+#' @rdname blog_serve
+#' @export
+blog_gen <- function(
+  input  = c(".", list.dirs("_source")),
+  output = c(".", rep("_posts", length(list.dirs("_source")))),
+  ...
+){
+  servr::jekyll(input = input, output = output, serve = FALSE, ...)
+}
 
 
 #' Set some knitr chunk options which may work well for blogging
