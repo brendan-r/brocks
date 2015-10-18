@@ -169,10 +169,10 @@ blog_gen <- function(
 #'
 #' I use this function to push blog posts live, as on my machine I have a bash
 #' alias \code{blog_push} which does this. This is an incredibyly lazy wrapper
-#' for \code{system(command)}, where \code{command} is by default the bash alias
-#' I use.
+#' for \code{blog_gen();system(command)}, where \code{command} is by default the
+#' bash alias I use.
 #'
-#' @param command Something which will be executed by system
+#' @param command Something which will be executed by \code{\link{system}}
 #'
 #' @details {
 #'   If it's of any interest, my \code{push_blog} bash alias is:
@@ -184,6 +184,7 @@ blog_gen <- function(
 #' @return Used for its side effects.
 #' @export
 blog_push <- function(command = "blog_push") {
+  blog_gen()
   system(command)
 }
 

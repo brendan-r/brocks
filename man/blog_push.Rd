@@ -7,7 +7,7 @@
 blog_push(command = "blog_push")
 }
 \arguments{
-\item{command}{Something which will be executed by system}
+\item{command}{Something which will be executed by \code{\link{system}}}
 }
 \value{
 Used for its side effects.
@@ -15,8 +15,8 @@ Used for its side effects.
 \description{
 I use this function to push blog posts live, as on my machine I have a bash
 alias \code{blog_push} which does this. This is an incredibyly lazy wrapper
-for \code{system(command)}, where \code{command} is by default the bash alias
-I use.
+for \code{blog_gen();system(command)}, where \code{command} is by default the
+bash alias I use.
 }
 \details{
 {
