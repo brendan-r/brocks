@@ -165,6 +165,28 @@ blog_gen <- function(
 }
 
 
+#' Push a blog post live (possibly)
+#'
+#' I use this function to push blog posts live, as on my machine I have a bash
+#' alias \code{blog_push} which does this. This is an incredibyly lazy wrapper
+#' for \code{system(command)}, where \code{command} is by default the bash alias
+#' I use.
+#'
+#' @param command Something which will be executed by system
+#'
+#' @details {
+#'   If it's of any interest, my \code{push_blog} bash alias is:
+#'
+#'   \code{'aws s3 sync /home/br/projects/brendanrocks.com/_site \
+#'          s3://brendanrocks.com --exclude "cache/*|README.md" --delete'}
+#'}
+#'
+#' @return Used for its side effects.
+#' @export
+blog_push <- function(command = "blog_push") {
+  system(command)
+}
+
 #' Set some knitr chunk options which may work well for blogging
 #'
 #' A small wrapper around knitr's \code{\link[knitr]{opts_chunk}}$set, with some
