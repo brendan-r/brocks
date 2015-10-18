@@ -88,6 +88,11 @@ filenamize <- filenamise
 new_post <- function(title = "new post", serve = TRUE, dir = "_source",
                      subdir = TRUE, skeleton_file = ".skeleton_post"){
 
+  if(!dir.exists(dir)){
+    stop("The directory '", dir, "' doesn't exist. Are you running R in
+         the right directory?")
+  }
+
   # Sanitise the post title
   fname <- filenamise(title, sep_char = "-")
 
@@ -102,6 +107,12 @@ new_post <- function(title = "new post", serve = TRUE, dir = "_source",
   r_name   <- file.path(fpath, paste0(fname, ".R"))
 
   # Read in the skeleton post
+  # If it doesn't exist, emit a warning and use the package default
+  if(!file.exists(skeleton_file)){
+    message("File .skeleton_post does not exist. Using package default")
+    skeleton_file <- system.file("skeleton_post.Rmd", package = "brocks")
+  }
+
   post <- readLines(skeleton_file)
   post[grepl("title: ", post)] <- paste0("title:  ", title)
   writeLines(post, rmd_name)
