@@ -1,8 +1,8 @@
 Package: brocks
 Type: Package
-Title: The personal R functions of Brendan Rocks
+Title: The Personal R Functions of Brendan Rocks
 Version: 0.2.999999
-Date: 2015-06-22
+Date: 2015-10-17
 Authors@R: person("Brendan", "Rocks", email = "rocks.brendan@gmail.com",
     role = c("aut", "cre"))
 URL: https://github.com/brendan-R/brocks/
@@ -14,8 +14,6 @@ Imports:
     assertthat,
     lubridate (>= 1.4.0.9500),
     servr,
-    gridExtra,
-    RGraphics,
     grid,
     png,
     ggplot2,

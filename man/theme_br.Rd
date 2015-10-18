@@ -7,6 +7,6 @@
 theme_br()
 }
 \description{
-Brendan's ggplot2 theme
+Currently, pretty half-baked!
 }
 

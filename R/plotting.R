@@ -1,3 +1,51 @@
+#' Add a watermark to a plot
+#'
+#' @param png_path A path to a valid png file to use for the watermark
+#'
+#' @export
+smx_watermark <- function(png_path = "~/projects/smx_logos/greyscale_top.png"){
+  # Insert something to write the rasterGrob to a variable within the package
+  # and just use that, if it exists (otherwise, load from disk)
+
+  img <- png::readPNG(png_path)
+  g   <- grid::rasterGrob(img, interpolate=TRUE)
+  ggplot2::annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
+}
+
+#' Brendan's ggplot2 theme
+#'
+#' Currently, pretty half-baked!
+#'
+#' @export
+theme_br <- function(){
+  # You should :: this up once you're happy with it
+  requireNamespace("ggplot2")
+  theme_bw() +
+    theme(
+      legend.position    = "top",
+      text = element_text(family = "Ubuntu"),
+      strip.text.x       = element_text(family = "Ubuntu", colour = 'white'),
+      legend.background  = element_rect(fill=scales::alpha('white', 0)),
+      strip.background   = element_rect(colour ="#FFFFFF",  fill = "#424142")
+    )
+}
+
+#' ggplot2 categorical colour hues
+#'
+#' Generate the colours which \code{ggplot2} would, given a certain number of
+#' categories.
+#'
+#' @param n The number of colours to return
+#'
+#' @author John Colby (taken from: \url{https://stackoverflow.com/questions/8197559/emulate-ggplot2-default-color-palette})
+#' @export
+#' @examples
+#' barplot(1:10, col = gg_colour_hue(10))
+gg_colour_hue <- function(n) {
+  hues = seq(15, 375, length=n+1)
+  hcl(h=hues, l=65, c=100)[1:n]
+}
+
 # #' Add a footnote to a ggplot chart
 # #'
 # #' Currently, the text wrapping is based on the plot's default font size (which
@@ -66,52 +114,4 @@
 #                       fontfamily = fontfamily, ...))
 #   )
 # }
-
-
-#' Add a watermark to a plot
-#'
-#' @param png_path A path to a valid png file to use for the watermark
-#'
-#' @export
-smx_watermark <- function(png_path = "~/projects/smx_logos/greyscale_top.png"){
-  # Insert something to write the rasterGrob to a variable within the package
-  # and just use that, if it exists (otherwise, load from disk)
-
-  img <- png::readPNG(png_path)
-  g   <- grid::rasterGrob(img, interpolate=TRUE)
-  ggplot2::annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
-}
-
-#' Brendan's ggplot2 theme
-#'
-#' Currently, pretty half-baked!
-#'
-#' @export
-theme_br <- function(){
-  # You should :: this up once you're happy with it
-  requireNamespace("ggplot2")
-  theme_bw() +
-    theme(
-      legend.position    = "top",
-      text = element_text(family = "Ubuntu"),
-      strip.text.x       = element_text(family = "Ubuntu", colour = 'white'),
-      legend.background  = element_rect(fill=scales::alpha('white', 0)),
-      strip.background   = element_rect(colour ="#FFFFFF",  fill = "#424142")
-    )
-}
-
-#' ggplot2 categorical colour hues
-#'
-#' Generate the colours which \code{ggplot2} would, given a certain number of
-#' categories.
-#'
-#' @param n The number of colours to return
-#'
-#' @author John Colby (taken from: \url{https://stackoverflow.com/questions/8197559/emulate-ggplot2-default-color-palette})
-#' @export
-#' @examples
-#' barplot(1:10, col = gg_colour_hue(10))
-gg_colour_hue <- function(n) {
-  hues = seq(15, 375, length=n+1)
-  hcl(h=hues, l=65, c=100)[1:n]
-}
+#

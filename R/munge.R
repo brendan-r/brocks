@@ -392,13 +392,13 @@ rev_levs <- function(x){
 #' kill_cols(test_data2)
 #'
 kill_cols <- function(x, empty_strings = TRUE){
-  n.lev <- function(x){
+  n_levs <- function(x){
     if(empty_strings)
-      x[x == ""] <- NA
-    length(table(x)[table(x) > 0])
+      x[grepl("^[[:space:]]*$", x)] <- NA
+    length(na.omit(unique(x)))
   }
 
-  x[,as.vector(apply(x, 2, n.lev)) > 1]
+  x[,as.vector(apply(x, 2, n_levs)) > 1]
 }
 
 
