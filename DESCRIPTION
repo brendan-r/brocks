@@ -1,8 +1,8 @@
 Package: brocks
 Type: Package
 Title: The Personal R Functions of Brendan Rocks
-Version: 0.2.999999
-Date: 2015-10-17
+Version: 0.3.999999
+Date: 2015-10-25
 Authors@R: person("Brendan", "Rocks", email = "rocks.brendan@gmail.com",
     role = c("aut", "cre"))
 URL: https://github.com/brendan-R/brocks/
@@ -17,8 +17,10 @@ Imports:
     grid,
     png,
     ggplot2,
-    scales
+    scales,
+    htmltools
 Suggests:
     testthat,
     knitr
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1
