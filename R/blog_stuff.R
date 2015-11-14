@@ -177,7 +177,8 @@ blog_gen <- function(
 #'
 #' @return Used for its side effects.
 #' @export
-blog_push <- function(command = 'aws s3 sync /home/br/projects/brendanrocks.com/_site s3://brendanrocks.com --exclude "cache/*|README.md" --delete') {
+blog_push <- function(command = 'aws s3 sync /home/br/projects/brendanrocks.com/_site \
+                      s3://brendanrocks.com --exclude "cache/*|README.md" --delete') {
   blog_gen()
   system(command)
 }
