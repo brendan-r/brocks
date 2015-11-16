@@ -4,8 +4,7 @@
 \alias{blog_push}
 \title{Push a blog post live (possibly)}
 \usage{
-
-  blog_push(command = "aws s3 sync /home/br/projects/brendanrocks.com/_site s3://brendanrocks.com --exclude \\"cache/*|README.md\\" --delete")
+blog_push(command = "bash _deploy.sh staging")
 }
 \arguments{
 \item{command}{Something which will be executed by \code{\link{system}}}

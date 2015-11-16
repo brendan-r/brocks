@@ -12,6 +12,12 @@ htmlwidgets_deps(a, knit_meta = knitr::knit_meta(),
 \item{a}{The file path for the input file being knit}
 
 \item{knit_meta}{The dependencies object.}
+
+\item{lib_dir}{The directory where the htmlwidgets dependency source code can be found (e.g. JavaScript and CSS files)}
+
+\item{includes_dir}{The directory to add the HTML file to}
+
+\item{always}{Should dependency files always be produced, even if htmlwidgets are not being used?}
 }
 \value{
 Used for it's side effects.

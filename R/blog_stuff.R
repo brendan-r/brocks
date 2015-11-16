@@ -177,7 +177,7 @@ blog_gen <- function(
 #'
 #' @return Used for its side effects.
 #' @export
-blog_push <- function(command = 'aws s3 sync /home/br/projects/brendanrocks.com/_site s3://brendanrocks.com --exclude "cache/*|README.md" --delete') {
+blog_push <- function(command = 'bash _deploy.sh staging') {
   blog_gen()
   system(command)
 }
@@ -214,6 +214,9 @@ blog_opts <- function(...){
 #'
 #' @param a The file path for the input file being knit
 #' @param knit_meta The dependencies object.
+#' @param lib_dir The directory where the htmlwidgets dependency source code can be found (e.g. JavaScript and CSS files)
+#' @param includes_dir The directory to add the HTML file to
+#' @param always Should dependency files always be produced, even if htmlwidgets are not being used?
 #'
 #' @return Used for it's side effects.
 #' @export
