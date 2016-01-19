@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{ac_se}
 \alias{ac_se}
-\title{Agresti-Coull Intervals}
+\title{'Agresti-Coull'ish Standard Errors}
 \usage{
 ac_se(logical_var, wt = 2)
 }
@@ -19,7 +19,8 @@ construction of a Wald interval}
 Agresti-Coull (1998) intervals are a great way to get a quick and
 non-terrible estimate of a proportion. They work by using a 'Wald' interval,
 after the addition of 2 successes and 2 failures to the sample (other numbers
-can be specified, via the \code{wt} argument).
+can be specified, via the \code{wt} argument). This function creates a
+Wald-style standard-error, after adding psuedo-responses.
 }
 \examples{
 ac_se(as.logical(round(runif(10))))

@@ -296,10 +296,10 @@ consolidate_values <- function(
 #' and returns it as numeric.
 #'
 #' @param x a \code{\link{vector}}, \code{\link{matrix}}, or
-#' \code{\link{data.frame}} containg \code{\link{character}} data
+#'   \code{\link{data.frame}} containg \code{\link{character}} data
 #'
-#' @return \code{\link{numeric}} values stripped from the \code{\link{character}}
-#'   values in \code{x}.
+#' @return \code{\link{numeric}} values stripped from the
+#'   \code{\link{character}} values in \code{x}.
 #' @export
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
 scale_strip <- function(x){

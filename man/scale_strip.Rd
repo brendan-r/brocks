@@ -11,8 +11,8 @@ scale_strip(x)
 \code{\link{data.frame}} containg \code{\link{character}} data}
 }
 \value{
-\code{\link{numeric}} values stripped from the \code{\link{character}}
-  values in \code{x}.
+\code{\link{numeric}} values stripped from the
+  \code{\link{character}} values in \code{x}.
 }
 \description{
 Survey systems commonly export data files with values measured by Likert

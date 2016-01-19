@@ -10,8 +10,8 @@ new_post(title = "new post", serve = TRUE, dir = "_source",
 \arguments{
 \item{title}{The title of the blog post}
 
-\item{serve}{Should \code{\link{blog_serve}} be run once the files have
-been set-up? Defatuls to \code{TRUE}.}
+\item{serve}{Should \code{\link{blog_serve}} be run once the files have been
+set-up? Defatuls to \code{TRUE}.}
 
 \item{dir}{The directory the post (or subdirectory) should reside in}
 
@@ -21,16 +21,15 @@ been set-up? Defatuls to \code{TRUE}.}
 as the basis for the basis for the newly created file}
 }
 \description{
-File Structure for a Jekyll Blog Post
+A function to set-up the file structure for a Jekyll blog post. Assumes that
+the current working directory is the root directory of the Jekyll site.
 }
 \details{
-{
-  \code{new_post} will create a .R file, and a .Rmd file (by default in a
-  subdirectory), with names created by running \code{title} through
+{ \code{new_post} will create a .R file, and a .Rmd file (by default
+  in a subdirectory), with names created by running \code{title} through
   \code{\link{filenamise}}. The .R file will contain a short note mentioning
   that it accompanies the .Rmd file, which will contain the same text as the
   file supplied by \code{skeleton_post} paramter. Both files will be opened
-  using \code{\link{sys_open}}.
-}
+  using \code{\link{sys_open}}. }
 }
 

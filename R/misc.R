@@ -1,10 +1,10 @@
-#' Agresti-Coull Intervals
+#' 'Agresti-Coull'ish Standard Errors
 #'
 #' Agresti-Coull (1998) intervals are a great way to get a quick and
 #' non-terrible estimate of a proportion. They work by using a 'Wald' interval,
 #' after the addition of 2 successes and 2 failures to the sample (other numbers
-#' can be specified, via the \code{wt} argument).
-#'
+#' can be specified, via the \code{wt} argument). This function creates a
+#' Wald-style standard-error, after adding psuedo-responses.
 #'
 #' @name ac_se
 #' @param logical_var A \code{\link{logical}} \code{\link{vector}}

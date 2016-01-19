@@ -13,9 +13,8 @@ blog_push(command = "bash _deploy.sh staging")
 Used for its side effects.
 }
 \description{
-I use this function to push blog posts live, as on my machine I have a bash
-alias \code{blog_push} which does this. This is an incredibyly lazy wrapper
-for \code{blog_gen();system(command)}, where \code{command} is by default
-how I upload changes to my website.
+I use this function to push blog posts live. This is an incredibyly lazy
+wrapper for \code{blog_gen();system(command)}, where \code{command} is by
+default how I upload changes to my website.
 }
 

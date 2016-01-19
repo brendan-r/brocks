@@ -35,8 +35,9 @@ sys_open <- function (f){
 
 #' Sanitise a String (URL/filename safe)
 #'
-#' Sanitise a string (removing puctuation and spaces), so that it can safely be
-#' used in a URL or file path.
+#' Sanitise a string (downcasing, and removing puctuation and spaces), so that
+#' it can safely be used in a URL or file path. Note: For URLs, hyphens, as
+#' opposed to underscores are preferred by search bots.
 #'
 #' @param x The string to be santised
 #' @param sep_char The character to use in place of spaces/punctuation found in
@@ -64,25 +65,34 @@ filenamise <- function(x, sep_char = "_", ext = ""){
 #' @name filenamise
 filenamize <- filenamise
 
+#' @export
+#' @name filenamise
+filenameize <- filenamise
+
+#' @export
+#' @name filenamise
+filenameise <- filenamise
+
 
 #' File Structure for a Jekyll Blog Post
 #'
+#' A function to set-up the file structure for a Jekyll blog post. Assumes that
+#' the current working directory is the root directory of the Jekyll site.
+#'
 #' @param title The title of the blog post
-#' @param serve Should \code{\link{blog_serve}} be run once the files have
-#'   been set-up? Defatuls to \code{TRUE}.
+#' @param serve Should \code{\link{blog_serve}} be run once the files have been
+#'   set-up? Defatuls to \code{TRUE}.
 #' @param dir The directory the post (or subdirectory) should reside in
 #' @param subdir Should the post live in a subdirectory? Defaults to \code{TRUE}
 #' @param skeleton_file The filepath of a skeleton blog post which will be used
 #'   as the basis for the basis for the newly created file
 #'
-#' @details {
-#'   \code{new_post} will create a .R file, and a .Rmd file (by default in a
-#'   subdirectory), with names created by running \code{title} through
+#' @details { \code{new_post} will create a .R file, and a .Rmd file (by default
+#'   in a subdirectory), with names created by running \code{title} through
 #'   \code{\link{filenamise}}. The .R file will contain a short note mentioning
 #'   that it accompanies the .Rmd file, which will contain the same text as the
 #'   file supplied by \code{skeleton_post} paramter. Both files will be opened
-#'   using \code{\link{sys_open}}.
-#' }
+#'   using \code{\link{sys_open}}. }
 #'
 #' @export
 new_post <- function(title = "new post", serve = TRUE, dir = "_source",
@@ -119,10 +129,7 @@ new_post <- function(title = "new post", serve = TRUE, dir = "_source",
 
   # Write out an empty R file as well, in case that's useful
   writeLines(
-    c("# This R file accomanies the .Rmd blog post",
-      paste("#", rmd_name),
-      "", ""
-    ),
+    c("# This R file accomanies the .Rmd blog post", paste("#", rmd_name), ""),
     r_name
   )
 
@@ -164,13 +171,11 @@ blog_gen <- function(
   servr::jekyll(input = input, output = output, serve = FALSE, ...)
 }
 
-
 #' Push a blog post live (possibly)
 #'
-#' I use this function to push blog posts live, as on my machine I have a bash
-#' alias \code{blog_push} which does this. This is an incredibyly lazy wrapper
-#' for \code{blog_gen();system(command)}, where \code{command} is by default
-#' how I upload changes to my website.
+#' I use this function to push blog posts live. This is an incredibyly lazy
+#' wrapper for \code{blog_gen();system(command)}, where \code{command} is by
+#' default how I upload changes to my website.
 #'
 #' @param command Something which will be executed by \code{\link{system}}
 #'
@@ -210,13 +215,19 @@ blog_opts <- function(...){
 
 #' Configure htmlwidgets dependencies for a knitr-jekyll blog
 #'
-#' This is really just added to build.R.
+#' Unlike static image plots, the outputs of htmlwidgets dependencies also have
+#' Javascript and CSS dependencies, which are not by default processed by knitr.
+#' \code{htmlwdigets_deps} provides a system to add the dependencies to a Jekyll
+#' blog. Further details are available in the following blog post:
+#' \url{http://brendanrocks.com/htwmlwidgets-knitr-jekyll/}.
 #'
 #' @param a The file path for the input file being knit
 #' @param knit_meta The dependencies object.
-#' @param lib_dir The directory where the htmlwidgets dependency source code can be found (e.g. JavaScript and CSS files)
+#' @param lib_dir The directory where the htmlwidgets dependency source code can
+#'   be found (e.g. JavaScript and CSS files)
 #' @param includes_dir The directory to add the HTML file to
-#' @param always Should dependency files always be produced, even if htmlwidgets are not being used?
+#' @param always Should dependency files always be produced, even if htmlwidgets
+#'   are not being used?
 #'
 #' @return Used for it's side effects.
 #' @export
@@ -231,8 +242,7 @@ htmlwidgets_deps <- function(a, knit_meta = knitr::knit_meta(),
 
   # Copy the libraries from the R packages to the 'htmlwidgets_deps' dir, and
   # obtain the html code required to import them
-  deps_str <- html_dependencies_to_string(knit_meta, lib_dir,
-                                          ".")
+  deps_str <- html_dependencies_to_string(knit_meta, lib_dir, ".")
 
   # Jekyll markdown posts are prefixed with a 12 char ISO date and hypen, before
   # becoming html posts. Remove!
@@ -242,8 +252,7 @@ htmlwidgets_deps <- function(a, knit_meta = knitr::knit_meta(),
 
   # Write the html dependency import code to a file, to be imported by the
   # liquid templates
-  deps_file <- paste0(includes_dir,
-                      gsub(".Rmd$", ".html", n12(basename(a[1]))))
+  deps_file <- paste0(includes_dir, gsub(".Rmd$", ".html", n12(basename(a[1]))))
 
   # Write out the file if either, the dependencies string has anything to add,
   # or, if the always parameter has been set to TRUE (useful for those building
@@ -269,10 +278,7 @@ html_dependencies_to_string <- function (dependencies, lib_dir, output_dir) {
   # A function to add Jekyll boilerplate
   prepend_baseurl <- function(path){
     # If the url doesn't start "/", make sure that it does
-    path <- ifelse(!grepl("^/", path),
-                   paste0("/", path),
-                   path
-                   )
+    path <- ifelse(!grepl("^/", path), paste0("/", path), path)
 
     paste0('{{ "', path, '" | prepend: site.baseurl }}')
   }
@@ -283,4 +289,3 @@ html_dependencies_to_string <- function (dependencies, lib_dir, output_dir) {
     hrefFilter = prepend_baseurl
   )
 }
-

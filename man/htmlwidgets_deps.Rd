@@ -13,16 +13,22 @@ htmlwidgets_deps(a, knit_meta = knitr::knit_meta(),
 
 \item{knit_meta}{The dependencies object.}
 
-\item{lib_dir}{The directory where the htmlwidgets dependency source code can be found (e.g. JavaScript and CSS files)}
+\item{lib_dir}{The directory where the htmlwidgets dependency source code can
+be found (e.g. JavaScript and CSS files)}
 
 \item{includes_dir}{The directory to add the HTML file to}
 
-\item{always}{Should dependency files always be produced, even if htmlwidgets are not being used?}
+\item{always}{Should dependency files always be produced, even if htmlwidgets
+are not being used?}
 }
 \value{
 Used for it's side effects.
 }
 \description{
-This is really just added to build.R.
+Unlike static image plots, the outputs of htmlwidgets dependencies also have
+Javascript and CSS dependencies, which are not by default processed by knitr.
+\code{htmlwdigets_deps} provides a system to add the dependencies to a Jekyll
+blog. Further details are available in the following blog post:
+\url{http://brendanrocks.com/htwmlwidgets-knitr-jekyll/}.
 }
 
