@@ -46,6 +46,7 @@ Nothing. Prints to the console/terminal with \code{\link{cat}}.
 }
 }
 \examples{
+\dontrun{
 # Let's tidy up the gender variable in test_data
 data(test_data)
 table(test_data$gender)
@@ -75,7 +76,7 @@ new_vals <- list(
 )
 
 test_data$gender <- refactor(test_data$gender, new_vals)
-
+}
 }
 \author{
 Brendan Rocks \email{rocks.brendan@gmail.com}
