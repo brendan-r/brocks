@@ -47,12 +47,12 @@ refactor <- function(x, new_values, throw_error = FALSE){
 #'   to a \code{.csv} file by supplying a path/name to the the \code{file}
 #'   argument.
 #'
-#'   To try and make the process less laborious, \code{refactor_list} also has
-#'   a \code{consolidate} parameter. If set to \code{TRUE}, the lookup generated
-#'   will pass the 'TO' values through \code{\link{consolidate_values}}, hopefully
-#'   consoldating factor levels which are different for small formatting reasons
-#'   in to one. See the \code{\link{consolidate_values}} documentation for
-#'   details.
+#'   To try and make the process less laborious, \code{refactor_list} also has a
+#'   \code{consolidate} parameter. If set to \code{TRUE}, the lookup generated
+#'   will pass the 'TO' values through \code{\link{consolidate_values}},
+#'   hopefully consoldating factor levels which are different for small
+#'   formatting reasons in to one. See the \code{\link{consolidate_values}}
+#'   documentation for details.
 #'
 #'   For a demonstration of how \code{\link{refactor}} and \code{refactor_list}
 #'   work together, see the package vignette, with:
