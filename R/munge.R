@@ -76,6 +76,7 @@ refactor <- function(x, new_values, throw_error = FALSE){
 #' @seealso \code{\link{refactor}}, the function which \code{rfeactor_list}
 #'   supports
 #' @examples
+#' \dontrun{
 #' # Let's tidy up the gender variable in test_data
 #' data(test_data)
 #' table(test_data$gender)
@@ -105,7 +106,7 @@ refactor <- function(x, new_values, throw_error = FALSE){
 #' )
 #'
 #' test_data$gender <- refactor(test_data$gender, new_vals)
-#'
+#'}
 refactor_list <- function(x, consolidate = FALSE, file = NULL){
   vals1 <- names(table(x))
 
