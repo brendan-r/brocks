@@ -12,23 +12,23 @@ smx_watermark <- function(png_path = "~/projects/smx_logos/greyscale_top.png"){
   ggplot2::annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
 }
 
-#' Brendan's ggplot2 theme
-#'
-#' Currently, pretty half-baked!
-#'
-#' @export
-theme_br <- function(){
-  # You should :: this up once you're happy with it
-  requireNamespace("ggplot2")
-  theme_bw() +
-    theme(
-      legend.position    = "top",
-      text = element_text(family = "Ubuntu"),
-      strip.text.x       = element_text(family = "Ubuntu", colour = 'white'),
-      legend.background  = element_rect(fill=scales::alpha('white', 0)),
-      strip.background   = element_rect(colour ="#FFFFFF",  fill = "#424142")
-    )
-}
+# #' Brendan's ggplot2 theme
+# #'
+# #' Currently, pretty half-baked!
+# #'
+# #' @export
+# theme_br <- function(){
+#   # You should :: this up once you're happy with it
+#   requireNamespace("ggplot2")
+#   theme_bw() +
+#     theme(
+#       legend.position    = "top",
+#       text = element_text(family = "Ubuntu"),
+#       strip.text.x       = element_text(family = "Ubuntu", colour = 'white'),
+#       legend.background  = element_rect(fill=scales::alpha('white', 0)),
+#       strip.background   = element_rect(colour ="#FFFFFF",  fill = "#424142")
+#     )
+# }
 
 #' ggplot2 categorical colour hues
 #'
