@@ -1,5 +1,5 @@
 # brocks
-[![Build Status](https://travis-ci.org/brendan-R/brocks.svg)](https://travis-ci.org/brendan-R/brocks)
+[![Build Status](https://travis-ci.org/brendan-r/brocks.svg)](https://travis-ci.org/brendan-R/brocks)
 [![Win Build Status](https://ci.appveyor.com/api/projects/status/github/brendan-r/brocks?branch=master&svg=true)](https://ci.appveyor.com/project/brendan-r/brocks)
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://img.shields.io/badge/repo%20status-active-brightgreen.svg)](http://www.repostatus.org/#active)
 <!--
@@ -11,14 +11,8 @@
 
 ## Installation
 
-brocks depends on the development version of
-[`lubridate`](https://github.com/hadley/lubridate) (bugfix for leap years!).
-This means that it fails CI builds, however, it should work locally,
-with:
-
 ```R
 # install.packages("devtools")
-devtools::install_github("hadley/lubridate")
 devtools::install_github("brendan-R/brocks")
 ```
 
