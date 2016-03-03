@@ -265,6 +265,12 @@ htmlwidgets_deps <- function(a, knit_meta = knitr::knit_meta(),
 #' @keywords internal
 #' Adapted from rmarkdown:::html_dependencies_as_string
 html_dependencies_to_string <- function (dependencies, lib_dir, output_dir) {
+
+  # Flatten and resolve html deps
+  dependencies <- html_dependency_resolver(
+    flatten_html_dependencies(dependencies)
+  )
+
   if (!is.null(lib_dir)) {
     dependencies <- lapply(
       dependencies, htmltools::copyDependencyToDir, lib_dir

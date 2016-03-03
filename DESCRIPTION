@@ -1,14 +1,13 @@
 Package: brocks
 Type: Package
 Title: The Personal R Functions of Brendan Rocks
-Version: 0.3.999999
-Date: 2015-10-25
+Version: 0.4
 Authors@R: person("Brendan", "Rocks", email = "rocks.brendan@gmail.com",
     role = c("aut", "cre"))
 URL: https://github.com/brendan-R/brocks/
 BugReports: https://github.com/brendan-R/brocks/issues
 Description: The personal R functions of Brendan Rocks.
-License: MIT + file LICENSE
+License: GPL-3
 Imports:
     stringr,
     assertthat,
