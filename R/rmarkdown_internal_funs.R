@@ -7,6 +7,12 @@
 # subject to change. Rstudio provide this code under the GPL-3 licence
 # (https://www.gnu.org/licenses/gpl-3.0.en.html).
 #
+# Authors:
+#   JJ Allaire <jj@rstudio.com>
+#   Joe Cheng <joe@rstudio.com>
+#   Jonathan McPherson <jonathan@rstudio.com>
+#   Winston Chang <winston@rstudio.com>
+#
 # Copyright (C) 2016 Rstudio inc.
 #
 # This program is free software: you can redistribute it and/or modify it under
