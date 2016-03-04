@@ -198,7 +198,6 @@ blog_push <- function(command = 'bash _deploy.sh staging') {
 #'
 #' @export
 blog_opts <- function(...){
-  library(knitr)
   knitr::opts_chunk$set(
     echo    = FALSE,
     warning = FALSE,
