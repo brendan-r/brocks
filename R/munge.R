@@ -410,11 +410,11 @@ killcols <- kill_cols
 
 #' Convert Ages or Dates, to a Factor Variable of Standard Age Groups
 #'
-#' Convert integer/numeric ages, or dates (of birth) to a factor of standard age groups, with
-#' presentable labels, ordered from youngest to oldest. The default provides the
-#' 'standard' age groups used by much of the market research industry. Custom
-#' age breaks can also be used, by passing a vector to the \code{breaks}
-#' argument.
+#' Convert integer/numeric ages, or dates (of birth) to a factor of standard age
+#' groups, with presentable labels, ordered from youngest to oldest. The default
+#' provides the 'standard' age groups used by much of the market research
+#' industry. Custom age breaks can also be used, by passing a vector to the
+#' \code{breaks} argument.
 #'
 #' @note This function does not round ages, and so the common
 #'   cultural/numerical interpretation of age works with decimal numbers. For
@@ -501,12 +501,8 @@ age_breaks <- function(x, breaks = c(-Inf, 18, 25, 35, 45, 55, 65, +Inf),
 #'
 #' test_data$age <- date_to_age(test_data$dob, Sys.Date() - 1)
 #'
-date_to_age <- function(dob, refdate = Sys.time()){
-  # Supressing warnings here owing to a (now fixed) bug in lubridate
-  # https://github.com/hadley/lubridate/pull/244
-  suppressWarnings(
-    lubridate::year(
-      lubridate::as.period(lubridate::new_interval(dob, refdate), unit = "year")
-    )
-  )
+date_to_age <- function (dob, refdate = Sys.time()) {
+  lubridate::year(lubridate::as.period(
+      lubridate::interval(dob, refdate)
+  ))
 }
