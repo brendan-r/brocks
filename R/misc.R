@@ -160,11 +160,21 @@ html_tri <- function(
 #'     \item{\bold{\code{format_nps}}}{ Does the same as the above, but without
 #'       the + suffix for positive numbers
 #'     }
+#'     \item{\bold{\code{unsci}}}{ Unscientific notation: Short colloquial
+#'       number formatting. For example, 1e+04 becomes "100k", 1.454e+09 becomes
+#'       "1.5B", etc.
+#'     }
+#'     \item{\bold{\code{unsci_dollars}}}{ A convenience function for the above,
+#'       with \code{currency = TRUE} as the default.
+#'     }
 #'   }
 #' }
 #'
 #' @param x \code{\link{numeric}} data to format
+#' @param currency Should numbers be prefixed with \code{symbol}?
+#' @param symbol if \code{currency = TRUE}, a string to prefix numbers with
 #' @param ... Passed to \code{\link{round}}
+#' @param digits Parameter passed to \code{\link{round}}
 #'
 #' @return \code{\link{character}}.
 #'
@@ -202,6 +212,36 @@ plus_minus_nps <- function(x, ...){
 format_nps <- function(x, ...){
   paste0(round(x * 100, ...))
 }
+
+#' @name misc_br_num_formats
+#' @export
+unsci <- function(x, digits = 1, currency = FALSE, symbol = "$") {
+  r <- function(x) round(x, digits)
+  k <- function(x) paste0(r(x / 1e+03), "k")
+  M <- function(x) paste0(r(x / 1e+06), "MM")
+  B <- function(x) paste0(r(x / 1e+09), "B")
+
+  # Based on the size of the number
+  prefixed <- ifelse(
+    x >= 1e+03 & x <= 1e+06, k(x),
+    ifelse(
+      x >= 1e+06 & x <= 1e+09, M(x), ifelse(x >= 1e+09, B(x), x)
+    )
+  )
+
+  # Append dollars
+  if (currency) {
+    prefixed <- paste0(symbol, prefixed)
+  }
+
+  # Add spaces to make uniform widths, and return
+  paste0(rep_char(times = max(nchar(prefixed)) - nchar(prefixed)), prefixed)
+}
+
+#' @name misc_br_num_formats
+#' @export
+unsci_dollars <- function(x, ...) unsci(x, currency = TRUE, ...)
+
 
 
 #' A vectorized version of switch

@@ -6,6 +6,8 @@
 \alias{plus_minus}
 \alias{plus_minus_nps}
 \alias{plus_minus_percent}
+\alias{unsci}
+\alias{unsci_dollars}
 \title{Miscellaneous Number Formatting Functions}
 \usage{
 plus_minus(x, ...)
@@ -15,11 +17,21 @@ plus_minus_percent(x, ...)
 plus_minus_nps(x, ...)
 
 format_nps(x, ...)
+
+unsci(x, digits = 1, currency = FALSE, symbol = "$")
+
+unsci_dollars(x, ...)
 }
 \arguments{
 \item{x}{\code{\link{numeric}} data to format}
 
 \item{...}{Passed to \code{\link{round}}}
+
+\item{digits}{Parameter passed to \code{\link{round}}}
+
+\item{currency}{Should numbers be prefixed with \code{symbol}?}
+
+\item{symbol}{if \code{currency = TRUE}, a string to prefix numbers with}
 }
 \value{
 \code{\link{character}}.
@@ -43,6 +55,13 @@ format_nps(x, ...)
     }
     \item{\bold{\code{format_nps}}}{ Does the same as the above, but without
       the + suffix for positive numbers
+    }
+    \item{\bold{\code{unsci}}}{ Unscientific notation: Short colloquial
+      number formatting. For example, 1e+04 becomes "100k", 1.454e+09 becomes
+      "1.5B", etc.
+    }
+    \item{\bold{\code{unsci_dollars}}}{ A convenience function for the above,
+      with \code{currency = TRUE} as the default.
     }
   }
 }
