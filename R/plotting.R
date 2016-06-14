@@ -43,7 +43,7 @@ geom_watermark <- function(png_path = Sys.getenv("WATERMARK_PNG")){
 #' barplot(1:10, col = gg_colour_hue(10))
 gg_colour_hue <- function(n) {
   hues = seq(15, 375, length=n+1)
-  hcl(h=hues, l=65, c=100)[1:n]
+  grDevices::hcl(h=hues, l=65, c=100)[1:n]
 }
 
 # #' Add a footnote to a ggplot chart

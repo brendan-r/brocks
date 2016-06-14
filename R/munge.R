@@ -129,7 +129,7 @@ refactor_list <- function(x, consolidate = FALSE, file = NULL){
       warning("Heads up: Lookup table written to .csv but file name supplied '",
               file, "' does not end in '.csv'")
 
-    write.csv(data.frame(from = vals1, to = vals2), row.names = FALSE)
+    utils::write.csv(data.frame(from = vals1, to = vals2), row.names = FALSE)
 
   } else {
     # Print the lookup table out to a .csv file
@@ -396,7 +396,7 @@ kill_cols <- function(x, empty_strings = TRUE){
   n_levs <- function(x){
     if(empty_strings)
       x[grepl("^[[:space:]]*$", x)] <- NA
-    length(na.omit(unique(x)))
+    length(stats::na.omit(unique(x)))
   }
 
   x[,as.vector(apply(x, 2, n_levs)) > 1]
