@@ -3,7 +3,7 @@
 #' @param png_path A path to a valid png file to use for the watermark
 #'
 #' @export
-smx_watermark <- function(png_path = "~/projects/smx_logos/greyscale_top.png"){
+geom_watermark <- function(png_path = Sys.getenv("WATERMARK_PNG")){
   # Insert something to write the rasterGrob to a variable within the package
   # and just use that, if it exists (otherwise, load from disk)
 
