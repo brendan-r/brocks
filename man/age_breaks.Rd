@@ -22,11 +22,11 @@ Internally passed to \code{\link{cut}}}
 \code{\link{factor}} age groups
 }
 \description{
-Convert integer/numeric ages, or dates (of birth) to a factor of standard age groups, with
-presentable labels, ordered from youngest to oldest. The default provides the
-'standard' age groups used by much of the market research industry. Custom
-age breaks can also be used, by passing a vector to the \code{breaks}
-argument.
+Convert integer/numeric ages, or dates (of birth) to a factor of standard age
+groups, with presentable labels, ordered from youngest to oldest. The default
+provides the 'standard' age groups used by much of the market research
+industry. Custom age breaks can also be used, by passing a vector to the
+\code{breaks} argument.
 }
 \note{
 This function does not round ages, and so the common
