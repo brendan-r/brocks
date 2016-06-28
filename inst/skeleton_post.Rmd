@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Sketelton Post"
-date: `r Sys.time()`
+date: "`r Sys.time()`"
 published: true
 tags: [example1, example2]
 ---
