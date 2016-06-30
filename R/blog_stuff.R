@@ -171,6 +171,28 @@ blog_gen <- function(
   servr::jekyll(input = input, output = output, serve = FALSE, ...)
 }
 
+#' @rdname blog_serve
+#' @export
+site_gen <- function(
+  input  = c('.', list.dirs('_dashboards'), list.dirs('_source')),
+  output = c('.', rep('.', length(list.dirs('_dashboards'))),
+             rep('_posts', length(list.dirs('_source')))),
+  ...
+){
+  servr::jekyll(input = input, output = output, serve = FALSE, ...)
+}
+
+#' @rdname blog_serve
+#' @export
+site_serve <- function(
+  input  = c('.', list.dirs('_dashboards'), list.dirs('_source')),
+  output = c('.', rep('.', length(list.dirs('_dashboards'))),
+             rep('_posts', length(list.dirs('_source')))),
+  ...
+){
+  servr::jekyll(input = input, output = output, serve = TRUE, ...)
+}
+
 #' Push a blog post live (possibly)
 #'
 #' I use this function to push blog posts live. This is an incredibyly lazy

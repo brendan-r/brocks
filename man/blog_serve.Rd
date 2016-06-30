@@ -3,12 +3,22 @@
 \name{blog_serve}
 \alias{blog_gen}
 \alias{blog_serve}
+\alias{site_gen}
+\alias{site_serve}
 \title{Serve or Compile a Jekyll Blog}
 \usage{
 blog_serve(input = c(".", list.dirs("_source")), output = c(".",
   rep("_posts", length(list.dirs("_source")))), ...)
 
 blog_gen(input = c(".", list.dirs("_source")), output = c(".", rep("_posts",
+  length(list.dirs("_source")))), ...)
+
+site_gen(input = c(".", list.dirs("_dashboards"), list.dirs("_source")),
+  output = c(".", rep(".", length(list.dirs("_dashboards"))), rep("_posts",
+  length(list.dirs("_source")))), ...)
+
+site_serve(input = c(".", list.dirs("_dashboards"), list.dirs("_source")),
+  output = c(".", rep(".", length(list.dirs("_dashboards"))), rep("_posts",
   length(list.dirs("_source")))), ...)
 }
 \arguments{
