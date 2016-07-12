@@ -148,17 +148,20 @@ html_tri <- function(
 #'   which do this.
 #'
 #'   \describe{
-#'     \item{\bold{\code{plus_minus}}}{ Is a wrapper for \code{\link{round}},
+#'     \item{\bold{\code{fmt_pm}}}{ Is a wrapper for \code{\link{round}},
 #'       which also \code{\link{paste}}s a + sign before positive numbers
 #'     }
-#'     \item{\bold{\code{plus_minus_percent}}}{ Does the same as above, but
-#'       multiplies by 100 first, and adds a % sign to the end of the number
+#'     \item{\bold{\code{fmt_pc}}}{ A simple formatting function for
+#'       percentages. Defaults to 0 decimal places
 #'     }
-#'     \item{\bold{\code{plus_minus_nps}}}{ Does the same as the above, but
-#'       without the percentage sign
+#'     \item{\bold{\code{fmt_pc_pm}}}{ As above, but with a + prefix for
+#'       positive numbers
 #'     }
-#'     \item{\bold{\code{format_nps}}}{ Does the same as the above, but without
-#'       the + suffix for positive numbers
+#'     \item{\bold{\code{format_nps}}}{ A very simple formatter for the Net
+#'       Promoter Score
+#'     }
+#'     \item{\bold{\code{fmt_nps_pm}}}{ As above, but without the percentage
+#'       sign
 #'     }
 #'     \item{\bold{\code{unsci}}}{ Unscientific notation: Short colloquial
 #'       number formatting. For example, 1e+04 becomes "100k", 1.454e+09 becomes
@@ -175,41 +178,43 @@ html_tri <- function(
 #' @param symbol if \code{currency = TRUE}, a string to prefix numbers with
 #' @param ... Passed to \code{\link{round}}
 #' @param digits Parameter passed to \code{\link{round}}
+#' @param type The truncation function for the number, in the context of the
+#'   text in which its likely to be formatted. One of \code{round} (the
+#'   \code{round} function is used), \code{greater} (the \code{floor} function
+#'   is used) or \code{less} (the \code{ceiling} function is used).
 #'
 #' @return \code{\link{character}}.
 #'
 #' @export
 #' @name misc_br_num_formats
 #' @author Brendan Rocks \email{rocks.brendan@@gmail.com}
-#' @examples
 #'
-#' plus_minus(-3:3)
-#' plus_minus_percent(runif(6) - .5)
-#' plus_minus_nps(runif(6) - .5)
-#' format_nps(runif(6) - .5)
-#'
-plus_minus <- function(x, ...){
+fmt_pm <- function(x, ...){
   paste0(ifelse(x > 0, "+", ""), round(x, ...))
 }
 
-
 #' @name misc_br_num_formats
 #' @export
-plus_minus_percent <- function(x, ...){
-  paste0(ifelse(x > 0, "+", ""), round(x * 100, ...), "%")
+fmt_pc <- function(x, type = c("round", "greater", "less"), digits = 0) {
+  f <- switch(type[1], round = round, greater = floor, less = ceiling)
+  paste0(f(x * 100 * 10^(digits)) / 10^(digits), "%")
 }
 
+#' @name misc_br_num_formats
+#' @export
+fmt_pc_pm <- function(x, ...){
+  paste0(ifelse(x > 0, "+", ""), fmt_pc(x, ...))
+}
 
 #' @name misc_br_num_formats
 #' @export
-plus_minus_nps <- function(x, ...){
+fmt_nps_pm <- function(x, ...){
   paste0(ifelse(x > 0, "+", ""), round(x * 100, ...))
 }
 
-
 #' @name misc_br_num_formats
 #' @export
-format_nps <- function(x, ...){
+fmt_nps <- function(x, ...){
   paste0(round(x * 100, ...))
 }
 
