@@ -17,18 +17,20 @@
 sys_open <- function (f){
   if (missing(f))
     stop("No file to open!")
-  f <- path.expand(f)
+  f <- normalizePath(f)
   if (!file.exists(f))
     stop("File not found!")
   if (grepl("w|W", .Platform$OS.type)) {
     shell.exec(f)
   }
   else {
-    if (grepl("darwin", version$os))
+    if (grepl("darwin", version$os)) {
       system(paste(shQuote("open"), shQuote(f)), wait = FALSE,
              ignore.stderr = TRUE)
-    else system(paste(shQuote("/usr/bin/xdg-open"), shQuote(f)),
+    } else {
+      system(paste(shQuote("/usr/bin/xdg-open"), shQuote(f)),
                 wait = FALSE, ignore.stdout = TRUE)
+    }
   }
 }
 
