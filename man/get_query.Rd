@@ -2,13 +2,15 @@
 % Please edit documentation in R/databases.R
 \name{get_query}
 \alias{get_query}
-\title{Retreive a database query from a SQL statement in a text file}
+\title{Retreive a database query with SQL, with caching and lazy defaults}
 \usage{
-get_query(sql_file, con = guess_db_connection(), local_cache = TRUE,
-  cache_dir = "./.sql_cache", gitignore = TRUE)
+get_query(sql_file = NULL, sql_string = NULL, con = guess_db_connection(),
+  local_cache = TRUE, cache_dir = "./.sql_cache", gitignore = TRUE)
 }
 \arguments{
-\item{sql_file}{A path to a file to SQL}
+\item{sql_file}{A path to a SQL text file}
+
+\item{sql_string}{A string containing SQL}
 
 \item{con}{A database connection. If unspecified, and there is a single
 database connection in the global environment, this will be used}
@@ -25,6 +27,7 @@ The results of passing the SQL statement to \code{\link{dbGetQuery}}
 }
 \description{
 A convenience function which wraps \code{\link{dbGetQuery}}, by default
-providing some local caching
+providing some local caching. Exactly one of \code{sql_file} and
+\code{sql_string} must be supplied.
 }
 
