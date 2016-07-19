@@ -14,6 +14,7 @@ BugReports: https://github.com/brendan-R/brocks/issues
 Description: The personal R functions of Brendan Rocks.
 License: GPL-3
 Imports:
+    magrittr,
     stringr,
     assertthat,
     lubridate (>= 1.4.0.9500),
