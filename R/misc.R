@@ -282,6 +282,100 @@ vswitch <- function(EXPR, ...){
 }
 
 
+#' Extract package dependencies from an R script
+#'
+#' @param file A file containing R code to parse
+#'
+#' @return A character vector containing the names of packages used in
+#'   \code{file}
+#' @export
+extract_package_deps <- function(file) {
+  txt <- readLines(file)
+
+  # Fine inline references to packages, like package::function or
+  # package:::function
+  inline  <- txt %>% stringr::str_extract_all("[[:alnum:]_\\.]*:{2,3}") %>%
+    unlist() %>% gsub(":{2,3}", "", .)
+
+  # Find references to packages via library(package) or require(package)
+  lib_reqs <- txt %>% stringr::str_extract_all(
+      "library\\([[:alnum:]_\\.]*\\)|require\\([[:alnum:]_\\.]*\\)"
+    ) %>% unlist() %>% gsub("library\\(|require\\(|\\)", "", .)
+
+  # Find some special operators which are commonly associated with certain
+  # packages
+  grepl()
+
+  out <- c(inline, lib_reqs) %>% stats::na.omit() %>% unique()
+  out[out != ""]
+}
+
+
+#' Recursively Parse R Files in a Directory, and Install Packages Used
+#'
+#' \code{install_deps} (recursively) finds R code files in a directory, and uses
+#' regular expressions to find code that looks like it refers to an R package
+#' (via \code{\link{extract_package_deps}}). It then extracts the names of all
+#' of these packages, checks that they're not already installed, and that they
+#' are on CRAN, and then installs them (via \code{\link{install.packages}}).
+#'
+#' @param dir The directory to search for R files to parse
+#' @param file_pattern A regular expression used to determine whether a file
+#'   should be parsed or not. The default will parse only \code{.R} and
+#'   \code{.Rmd} files
+#' @param ... Passed to \code{\link{install.packages}}
+#'
+#' @return Used for it's side effects (the installation of packages)
+#' @export
+install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$", ...) {
+  file_list <- list.files(dir, recursive = TRUE) %>% .[grepl(file_pattern, .)]
+
+  package_list <- file_list %>% lapply(extract_package_deps) %>% unlist() %>%
+    unique
+
+  # Let the user know which files you've scanned
+  message("Searching...\n    ", paste(file_list, collapse = "\n    "))
+
+  # Vector of installed packages
+  installed <- utils::installed.packages()[,1]
+
+  to_install        <- package_list[!package_list %in% already_installed]
+  already_installed <- package_list[package_list %in% already_installed]
+
+  if (length(already_installed) > 0) {
+    message("The following packages are already installed -- no action taken:",
+            "\n\n", paste(already_installed, collapse = ", "))
+  }
+
+  # Get a list of everything on CRAN. Surprisingly fast!
+  cran_packages <- utils::available.packages()
+
+  on_cran     <- to_install[ to_install %in% cran_packages]
+  not_on_cran <- to_install[!to_install %in% cran_packages]
+
+  if (length(not_on_cran) > 0) {
+    warning("The following packages are not available on CRAN, and have not ",
+            "been installed:\n\n", paste(not_on_cran, collapse = ", "))
+  }
+
+  # If there's nothing to do, end
+  if (!length(on_cran) > 0) {
+    message("Up to date.")
+    return()
+  }
+
+  # Otherwise, install stuff
+  if (length(on_cran) > 0) {
+    message("Installing the following packages:\n\n",
+            paste(on_cran, collapse = ", "))
+    utils::install.packages(on_cran, ...)
+  }
+}
+
+
+
+
+
 #' An idealised test data set, for demonstrating some of the functions
 #'
 #' An idealised test data set, for demonstrating some of the functions in the
