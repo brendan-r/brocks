@@ -267,15 +267,18 @@ htmlwidgets_deps <- function(a, knit_meta = knitr::knit_meta(),
   # obtain the html code required to import them
   deps_str <- html_dependencies_to_string(knit_meta, lib_dir, ".")
 
-  # Jekyll markdown posts are prefixed with a 12 char ISO date and hypen, before
-  # becoming html posts. Remove!
-  n12 <- function(x) {
-    substr(x, 12, nchar(x))
+  # *Sometimes* Jekyll markdown posts are prefixed with a 12 char ISO date and
+  # hypen, before becoming html posts. Remove, if present.
+  lose_date <- function(x) {
+    gsub("^[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}-", "", x)
   }
 
   # Write the html dependency import code to a file, to be imported by the
   # liquid templates
-  deps_file <- paste0(includes_dir, gsub(".Rmd$", ".html", n12(basename(a[1]))))
+  deps_file <- paste0(
+    includes_dir,
+    gsub(".Rmd$", ".html", lose_date(basename(a[1])))
+  )
 
   # Write out the file if either, the dependencies string has anything to add,
   # or, if the always parameter has been set to TRUE (useful for those building
