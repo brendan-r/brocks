@@ -1,7 +1,7 @@
 Package: brocks
 Type: Package
 Title: The Personal R Functions of Brendan Rocks
-Version: 0.5.1
+Version: 0.5.2
 Authors@R: c(
     person("Brendan", "Rocks", email = "brendan@brendanrocks.com",
            role = c("aut", "cre", "cph")),
