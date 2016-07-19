@@ -304,9 +304,18 @@ extract_package_deps <- function(file) {
 
   # Find some special operators which are commonly associated with certain
   # packages
-  grepl()
+  magrittr   <- if (grepl("%$%|%>%|%<>%|%T>%", txt))
+    "magrittr"
 
-  out <- c(inline, lib_reqs) %>% stats::na.omit() %>% unique()
+  data.table <- if (grepl("%like%|%between%|%inrange%|%chin%", txt))
+    "data.table"
+
+  future     <- if (grepl("%<-%|%->%|%<=%|%=>%|%plan%|%tweak%", txt))
+    "future"
+
+  ops_packages <- c(magrittr, data.table, future)
+
+  out <- c(inline, lib_reqs, ops_pacakges) %>% stats::na.omit() %>% unique()
   out[out != ""]
 }
 
