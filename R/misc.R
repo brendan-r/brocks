@@ -271,7 +271,7 @@ unsci <- function(x, digits = 1, currency = FALSE, symbol = "$") {
   prefixed <- paste0("", ifelse(
     x >= 1e+03 & x < 1e+06, k(x),
     ifelse(
-      x >= 1e+06 & x < 1e+09, M(x), ifelse(x >= 1e+09, B(x), x)
+      x >= 1e+06 & x < 1e+09, M(x), ifelse(x >= 1e+09, B(x), r(x))
     )
   ))
 
