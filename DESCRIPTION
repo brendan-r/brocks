@@ -25,7 +25,8 @@ Imports:
     scales,
     htmltools,
     DBI,
-    openssl
+    openssl,
+    googlesheets
 Suggests:
     testthat,
     knitr,

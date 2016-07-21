@@ -30,6 +30,46 @@ ac_se <- function(logical_var, wt = 2){
 }
 
 
+#' A wrapper for the googlesheets package: A lazy way to read a googlesheet
+#'
+#' This auths (via \code{\link{gs_auth}}), finds a sheet, and reads it (via
+#' \code{\link{gs_read}}). It assumes that you've already set-up your computing
+#' evironment to use the the \code{\link{googlesheets}} pacakge; see it's
+#' documentation for more details.
+#'
+#' @param key   Passed to \code{\link{gs_key}}
+#' @param title Passed to \code{\link{gs_title}}
+#' @param url   Passed to \code{\link{gs_url}}
+#'
+#' @return The results of \code{\link{gs_read}}
+#' @export
+read_gs <- function(key = NULL, title = NULL, url = NULL){
+
+  if (length(c(key, title, url)) != 1L) {
+    stop("Only one sheet parameter may be supplied.")
+  }
+
+  # Auth
+  googlesheets::gs_auth()
+
+  # Use the right fun for the param
+  if(!is.null(key))
+    gs_obj <- googlesheets::gs_key(key)
+
+  if(!is.null(title))
+    gs_obj <- googlesheets::gs_title(title)
+
+  if(!is.null(url))
+    gs_obj <- googlesheets::gs_url(url)
+
+  out <- googlesheets::gs_read(gs_obj)
+
+  # Should be exported by the next version:
+  # https://github.com/jennybc/googlesheets/commit/61042d
+  # googlesheets::gs_deauth()
+
+  return(out)
+}
 
 
 #' Repeat a character a variable number of times
