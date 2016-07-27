@@ -84,6 +84,12 @@ get_query <- function (
   } else {
     # Otherwise, hit the db, cache the results locally for next time, and exit
     result <- DBI::dbGetQuery(con, sql)
+
+    # Note: Error handling in light of
+    # https://github.com/rstats-db/DBI/issues/125
+    if (is.null(result))
+      stop("NULL result from database")
+
     saveRDS(result, filename)
     return(result)
   }
