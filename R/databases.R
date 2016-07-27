@@ -75,7 +75,7 @@ get_query <- function (
   # hyphen, and the hash of the sql itself
   filename <- file.path(
     normalizePath(cache_dir),
-    paste0(openssl::md5(sql_file), "-", openssl::md5(sql), ".RData")
+    paste0(openssl::md5(sql_file), "-", openssl::md5(sql), ".rds")
   )
 
   # If there's already a cached file, just use that (much faster!)
