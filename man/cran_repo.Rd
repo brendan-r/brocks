@@ -4,7 +4,7 @@
 \alias{cran_repo}
 \title{Return a CRAN repo: The user-default, or RStudio's}
 \usage{
-cran_repo(fallback = "http://cran.rstudio.com/")
+cran_repo(fallback = "https://cran.rstudio.com/")
 }
 \value{
 Either \code{fallback}, or the result of

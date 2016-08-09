@@ -376,7 +376,7 @@ extract_package_deps <- function(file) {
 #'   \code{getOption("repos")["CRAN"]}
 #'
 #' @keywords internal
-cran_repo <- function(fallback = "http://cran.rstudio.com/") {
+cran_repo <- function(fallback = "https://cran.rstudio.com/") {
   default_repo <- getOption("repos")["CRAN"]
   # Is there a default set that can be contacted over http(s)? (The default if
   # unset seems to be "@CRAN@", hence the http check)
@@ -427,7 +427,7 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$",
   }
 
   # Get a list of everything on CRAN. Surprisingly fast!
-  cran_packages <- utils::available.packages(cran_mirror)
+  cran_packages <- utils::available.packages(contrib.url(cran_mirror))
 
   on_cran     <- to_install[ to_install %in% cran_packages]
   not_on_cran <- to_install[!to_install %in% cran_packages]
@@ -439,7 +439,7 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$",
 
   # If there's nothing to do, end
   if (!length(on_cran) > 0) {
-    message("Up to date.")
+    message("\n\nUp to date.")
     return(invisible())
   }
 
