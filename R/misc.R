@@ -365,6 +365,28 @@ extract_package_deps <- function(file) {
 }
 
 
+#' Return a CRAN repo: The user-default, or RStudio's
+#'
+#' Package installation on remote machines depends on a CRAN repo, which can be
+#' tricky to set non-interactively. This simple wrapper function looks to see if
+#' a default CRAN mirror has already been set. If it has, it is returned. If
+#' not, \code{fallback} is returned.
+#'
+#' @return Either \code{fallback}, or the result of
+#'   \code{getOption("repos")["CRAN"]}
+#'
+#' @keywords internal
+cran_repo <- function(fallback = "http://cran.rstudio.com/") {
+  default_repo <- getOption("repos")["CRAN"]
+  # Is there a default set that can be contacted over http(s)? (The default if
+  # unset seems to be "@CRAN@", hence the http check)
+  if (!grepl("^http", default_repo)) {
+    return(fallback)
+  } else {
+    return(default_repo)
+  }
+}
+
 #' Recursively Parse R Files in a Directory, and Install Packages Used
 #'
 #' \code{install_deps} (recursively) finds R code files in a directory, and uses
@@ -377,11 +399,14 @@ extract_package_deps <- function(file) {
 #' @param file_pattern A regular expression used to determine whether a file
 #'   should be parsed or not. The default will parse only \code{.R} and
 #'   \code{.Rmd} files
+#' @param cran_mirror The CRAN mirror to use. The default calls a small function
+#'   which returns the Rstudio mirror, if no current default exists
 #' @param ... Passed to \code{\link{install.packages}}
 #'
 #' @return Used for it's side effects (the installation of packages)
 #' @export
-install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$", ...) {
+install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$",
+                         cran_mirror = cran_repo(), ...) {
   file_list <- list.files(dir, recursive = TRUE) %>% .[grepl(file_pattern, .)]
 
   package_list <- file_list %>% lapply(extract_package_deps) %>% unlist() %>%
@@ -402,7 +427,7 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$", ...) {
   }
 
   # Get a list of everything on CRAN. Surprisingly fast!
-  cran_packages <- utils::available.packages()
+  cran_packages <- utils::available.packages(cran_mirror)
 
   on_cran     <- to_install[ to_install %in% cran_packages]
   not_on_cran <- to_install[!to_install %in% cran_packages]
@@ -422,7 +447,7 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$", ...) {
   if (length(on_cran) > 0) {
     message("Installing the following packages:\n\n",
             paste(on_cran, collapse = ", "))
-    utils::install.packages(on_cran, ...)
+    utils::install.packages(on_cran, repos = cran_mirror, ...)
   }
 }
 

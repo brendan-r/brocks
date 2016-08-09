@@ -4,7 +4,8 @@
 \alias{install_deps}
 \title{Recursively Parse R Files in a Directory, and Install Packages Used}
 \usage{
-install_deps(dir = getwd(), file_pattern = "\\\\.R$|\\\\.Rmd$", ...)
+install_deps(dir = getwd(), file_pattern = "\\\\.R$|\\\\.Rmd$",
+  cran_mirror = cran_repo(), ...)
 }
 \arguments{
 \item{dir}{The directory to search for R files to parse}
@@ -12,6 +13,9 @@ install_deps(dir = getwd(), file_pattern = "\\\\.R$|\\\\.Rmd$", ...)
 \item{file_pattern}{A regular expression used to determine whether a file
 should be parsed or not. The default will parse only \code{.R} and
 \code{.Rmd} files}
+
+\item{cran_mirror}{The CRAN mirror to use. The default calls a small function
+which returns the Rstudio mirror, if no current default exists}
 
 \item{...}{Passed to \code{\link{install.packages}}}
 }
