@@ -330,9 +330,11 @@ vswitch <- function(EXPR, ...){
 #'   \code{file}
 #' @export
 extract_package_deps <- function(file) {
-  txt <- readLines(file)
+  # Read file, strip comments and empty lines
+  txt <- readLines(file) %>% gsub("#.*$", "", .) %>%
+    subset(!grepl("^$|^[[:space:]]$", .))
 
-  # Fine inline references to packages, like package::function or
+  # Find inline references to packages, like package::function or
   # package:::function
   inline  <- txt %>% stringr::str_extract_all("[[:alnum:]_\\.]*:{2,3}") %>%
     unlist() %>% gsub(":{2,3}", "", .)
@@ -344,6 +346,9 @@ extract_package_deps <- function(file) {
 
   # Find some special operators which are commonly associated with certain
   # packages
+
+  txt <- paste(txt, collapse = "\n")
+
   magrittr   <- if (grepl("%$%|%>%|%<>%|%T>%", txt))
     "magrittr"
 
@@ -355,7 +360,7 @@ extract_package_deps <- function(file) {
 
   ops_packages <- c(magrittr, data.table, future)
 
-  out <- c(inline, lib_reqs, ops_pacakges) %>% stats::na.omit() %>% unique()
+  out <- c(inline, lib_reqs, ops_packages) %>% stats::na.omit() %>% unique()
   out[out != ""]
 }
 
@@ -388,8 +393,8 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$", ...) {
   # Vector of installed packages
   installed <- utils::installed.packages()[,1]
 
-  to_install        <- package_list[!package_list %in% already_installed]
-  already_installed <- package_list[package_list %in% already_installed]
+  to_install        <- package_list[!package_list %in% installed]
+  already_installed <- package_list[package_list %in% installed]
 
   if (length(already_installed) > 0) {
     message("The following packages are already installed -- no action taken:",
@@ -410,7 +415,7 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$", ...) {
   # If there's nothing to do, end
   if (!length(on_cran) > 0) {
     message("Up to date.")
-    return()
+    return(invisible())
   }
 
   # Otherwise, install stuff
