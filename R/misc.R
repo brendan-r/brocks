@@ -413,7 +413,7 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$",
     unique
 
   # Let the user know which files you've scanned
-  message("Searching...\n    ", paste(file_list, collapse = "\n    "))
+  message("Searching...\n    ", paste(file_list, collapse = "\n    "), "\n")
 
   # Vector of installed packages
   installed <- utils::installed.packages()[,1]
@@ -423,7 +423,7 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$",
 
   if (length(already_installed) > 0) {
     message("The following packages are already installed -- no action taken:",
-            "\n\n", paste(already_installed, collapse = ", "))
+            "\n", paste(already_installed, collapse = ", "))
   }
 
   # Get a list of everything on CRAN. Surprisingly fast!
@@ -434,12 +434,12 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$",
 
   if (length(not_on_cran) > 0) {
     warning("The following packages are not available on CRAN, and have not ",
-            "been installed:\n\n", paste(not_on_cran, collapse = ", "))
+            "been installed:\n", paste(not_on_cran, collapse = ", "))
   }
 
   # If there's nothing to do, end
   if (!length(on_cran) > 0) {
-    message("\n\nUp to date.")
+    message("\n\nUp to date.\n")
     return(invisible())
   }
 
