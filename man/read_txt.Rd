@@ -16,7 +16,7 @@ read_txt(file, print = FALSE)
 The contents of the file, as a character vector of length one.
 }
 \description{
-A simple wrapper function around \code{\link{readlines}}, which combines each
+A simple wrapper function around \code{\link{readLines}}, which combines each
 line into a single string, via \code{paste0(x, collapse = "\n")}.
 }
 

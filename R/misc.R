@@ -1,6 +1,6 @@
 #' Read a text file
 #'
-#' A simple wrapper function around \code{\link{readlines}}, which combines each
+#' A simple wrapper function around \code{\link{readLines}}, which combines each
 #' line into a single string, via \code{paste0(x, collapse = "\n")}.
 #'
 #' @param file A filename to read-in
@@ -443,7 +443,7 @@ install_deps <- function(dir = getwd(), file_pattern = "\\.R$|\\.Rmd$",
   }
 
   # Get a list of everything on CRAN. Surprisingly fast!
-  cran_packages <- utils::available.packages(contrib.url(cran_mirror))
+  cran_packages <- utils::available.packages(utils::contrib.url(cran_mirror))
 
   on_cran     <- to_install[ to_install %in% cran_packages]
   not_on_cran <- to_install[!to_install %in% cran_packages]
