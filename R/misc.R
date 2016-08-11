@@ -1,3 +1,19 @@
+#' Read a text file
+#'
+#' A simple wrapper function around \code{\link{readlines}}, which combines each
+#' line into a single string, via \code{paste0(x, collapse = "\n")}.
+#'
+#' @param file A filename to read-in
+#' @param print Should the contents of the file be printed to the console with
+#'   \code{\link{cat}}? (If so, results will be returned invisibly.)
+#'
+#' @return The contents of the file, as a character vector of length one.
+#' @export
+read_txt <- function(file, print = FALSE) {
+  cat_if <- if(print) function(x){cat(x); invisible(x)} else function(x) x
+  cat_if(paste0(readLines(file), collapse = "\n"))
+}
+
 #' 'Agresti-Coull'ish Standard Errors
 #'
 #' Agresti-Coull (1998) intervals are a great way to get a quick and
