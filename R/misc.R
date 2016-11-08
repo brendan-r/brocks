@@ -14,6 +14,24 @@ read_txt <- function(file, print = FALSE) {
   cat_if(paste0(readLines(file), collapse = "\n"))
 }
 
+
+#' Turn and R vector into a SQL vector
+#'
+#' @param x A vector
+#'
+#' @return \code{character}
+#' @export
+#'
+#' @examples
+#' to_sql_vector(letters[1:10])
+to_sql_vector <- function(x) {
+  x %>%
+    gsub("'", "''", .) %>%        # "Escape" ' characters with ''
+    paste(collapse = "', '") %>%  # Concat c("x", "y") into "'x', 'y'"
+    paste0("('", ., "')")         # Put brackets on it
+}
+
+
 #' 'Agresti-Coull'ish Standard Errors
 #'
 #' Agresti-Coull (1998) intervals are a great way to get a quick and
