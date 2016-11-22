@@ -20,7 +20,7 @@ guess_db_connection <- function (db_con_classes = "PostgreSQLConnection") {
 
 #' Taken from https://github.com/hadley/httr/blob/1fc659856602f60ff75eb01903513244e3491ec2/R/oauth-cache.R#L52
 #' @keywords internal
-add_line <- function(path, line, quiet = FALSE) {
+add_line <- function(path, line) {
   if (file.exists(path)) {
     lines <- readLines(path, warn = FALSE)
     lines <- lines[lines != ""]
@@ -29,7 +29,7 @@ add_line <- function(path, line, quiet = FALSE) {
   }
 
   if (line %in% lines) return(TRUE)
-  if (!quiet) message("Adding ", line, " to ", path)
+  if (verbose) message("Adding ", line, " to ", path)
 
   lines <- c(lines, line)
   writeLines(lines, path)
@@ -66,8 +66,8 @@ get_query <- function(
 ) {
 
   # Print a message if verbose is TRUE
-  vb_message <- function (x) {
-    if(verbose) message(x)
+  vb_message <- function (...) {
+    if(verbose) message(...)
   }
 
   # This is a lazy, slightly unpredicatble function: If `sql` resolves to a file
@@ -79,7 +79,7 @@ get_query <- function(
 
   # See if the variable `sql` resolves to a file
   if (file.exists(sql)) {
-    vb_message(sql, " resolves to a file. Reading in SQL statement")
+    vb_message(sql, " resolves to a file. Reading in SQL statement.")
     # Get the filename into an explicit variable
     sql_file   <- sql
     sql_string <- paste0(readLines(sql_file), collapse = "\n")
@@ -92,6 +92,7 @@ get_query <- function(
 
   # If there's no interest in the local cache stuff, hit the db and exit
   if (!local_cache) {
+    vb_message("Querying database...")
     return(DBI::dbGetQuery(con, sql_string))
   }
 
@@ -113,6 +114,7 @@ get_query <- function(
     return(readRDS(filename))
   } else {
     # Otherwise, hit the db, cache the results locally for next time, and exit
+    vb_message("Querying database...")
     result <- DBI::dbGetQuery(con, sql_string)
 
     # Note: Error handling in light of
