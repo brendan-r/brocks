@@ -21,7 +21,7 @@ fmt_nps_pm(x, ...)
 
 fmt_nps(x, ...)
 
-unsci(x, digits = 1, currency = FALSE, symbol = "$")
+unsci(x, digits = 1, currency = FALSE, symbol = "$", pad = TRUE)
 
 unsci_dollars(x, ...)
 }
@@ -40,6 +40,9 @@ is used) or \code{less} (the \code{ceiling} function is used).}
 \item{currency}{Should numbers be prefixed with \code{symbol}?}
 
 \item{symbol}{if \code{currency = TRUE}, a string to prefix numbers with}
+
+\item{pad}{Should the resulting strings be prefix-padded with spaces to make
+all strings in the character vector a uniform width?}
 }
 \value{
 \code{\link{character}}.

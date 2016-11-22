@@ -4,7 +4,7 @@
 \alias{add_line}
 \title{Taken from https://github.com/hadley/httr/blob/1fc659856602f60ff75eb01903513244e3491ec2/R/oauth-cache.R#L52}
 \usage{
-add_line(path, line, quiet = FALSE)
+add_line(path, line)
 }
 \description{
 Taken from https://github.com/hadley/httr/blob/1fc659856602f60ff75eb01903513244e3491ec2/R/oauth-cache.R#L52

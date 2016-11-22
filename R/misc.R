@@ -256,6 +256,8 @@ html_tri <- function(
 #'   text in which its likely to be formatted. One of \code{round} (the
 #'   \code{round} function is used), \code{greater} (the \code{floor} function
 #'   is used) or \code{less} (the \code{ceiling} function is used).
+#' @param pad Should the resulting strings be prefix-padded with spaces to make
+#'   all strings in the character vector a uniform width?
 #'
 #' @return \code{\link{character}}.
 #'
@@ -294,7 +296,7 @@ fmt_nps <- function(x, ...){
 
 #' @name misc_br_num_formats
 #' @export
-unsci <- function(x, digits = 1, currency = FALSE, symbol = "$") {
+unsci <- function(x, digits = 1, currency = FALSE, symbol = "$", pad = TRUE) {
   r <- function(x) round(x, digits)
   k <- function(x) paste0(r(x / 1e+03), "k")
   M <- function(x) paste0(r(x / 1e+06), "MM")
@@ -314,8 +316,14 @@ unsci <- function(x, digits = 1, currency = FALSE, symbol = "$") {
     prefixed <- paste0(symbol, prefixed)
   }
 
-  # Add spaces to make uniform widths, and return
-  paste0(rep_char(times = max(nchar(prefixed)) - nchar(prefixed)), prefixed)
+  # If pad = TRUE, add spaces to make uniform widths
+  if (pad) {
+    prefixed <- paste0(
+      rep_char(times = max(nchar(prefixed)) - nchar(prefixed)),
+      prefixed
+    )
+  }
+  prefixed
 }
 
 #' @name misc_br_num_formats
