@@ -18,6 +18,25 @@ guess_db_connection <- function (db_con_classes = "PostgreSQLConnection") {
 }
 
 
+#' Taken from https://github.com/hadley/httr/blob/1fc659856602f60ff75eb01903513244e3491ec2/R/oauth-cache.R#L52
+#' @keywords internal
+add_line <- function(path, line, quiet = FALSE) {
+  if (file.exists(path)) {
+    lines <- readLines(path, warn = FALSE)
+    lines <- lines[lines != ""]
+  } else {
+    lines <- character()
+  }
+
+  if (line %in% lines) return(TRUE)
+  if (!quiet) message("Adding ", line, " to ", path)
+
+  lines <- c(lines, line)
+  writeLines(lines, path)
+  TRUE
+}
+
+
 #' Retreive a database query with SQL, with caching and lazy defaults
 #'
 #' A convenience function which wraps \code{\link{dbGetQuery}}, by default
@@ -70,6 +89,9 @@ get_query <- function (
 
   # If the cache_dir doesn't exist, create it (this won't overwrite anything)
   dir.create(cache_dir, showWarnings = FALSE)
+
+  # If they user wants you to, gitignore the cache_dir
+  add_line(".gitignore", cache_dir)
 
   # Generate a filename for the binary data cache: The hash of the filename, a
   # hyphen, and the hash of the sql itself
