@@ -40,51 +40,59 @@ add_line <- function(path, line, quiet = FALSE) {
 #' Retreive a database query with SQL, with caching and lazy defaults
 #'
 #' A convenience function which wraps \code{\link{dbGetQuery}}, by default
-#' providing some local caching. Exactly one of \code{sql_file} and
-#' \code{sql_string} must be supplied.
+#' providing some local caching. The function is deliberately lazy at the cost
+#' of being unpredictable in edge-cases -- if \code{sql} resolves to a valid
+#' file, it will be read in as a SQL statement, if it does not, the string will
+#' be passed directly to the server as an SQL statement.
 #'
-#' @param sql_file A path to a SQL text file
-#' @param sql_string A string containing SQL
+#' @param sql \code{\link{character}}. Either a path to an existent text file
+#'   which will be read in as a valid SQL statement and submitted to the sever.
+#'   If the file does not exist, \code{sql} will be treated as a valid SQL
+#'   statement and submitted to the server
 #' @param con A database connection. If unspecified, and there is a single
 #'   database connection in the global environment, this will be used
 #' @param local_cache Should results be cached locally as \code{.RData} files
 #'   via \code{\link{saveRDS}}?
 #' @param cache_dir The directory in which to cache files
 #' @param gitignore Should the cache directory be \code{.gitignored}?
+#' @param verbose Should the function tell you how it's processing the strings
+#'   passed to \code{sql}, via \code{\link{message}}?
 #'
 #' @return The results of passing the SQL statement to \code{\link{dbGetQuery}}
 #' @export
-get_query <- function (
-  sql_file = NULL, sql_string = NULL, con = guess_db_connection(),
-  local_cache = TRUE, cache_dir = "./.sql_cache",  gitignore = TRUE
+get_query <- function(
+  sql = NULL, con = guess_db_connection(), local_cache = TRUE,
+  cache_dir = "./.sql_cache",  gitignore = TRUE, verbose = FALSE
 ) {
 
-  # You'll need some SQL
-  null_sources <- c(is.null(sql_file), is.null(sql_string))
-  if (all(null_sources) | all(!null_sources)) {
-    stop("Exactly one of sql_file and sql_string must be non-NULL")
+  # Print a message if verbose is TRUE
+  vb_message <- function (x) {
+    if(verbose) message(x)
   }
 
-  # If the user's chosen to use a file
-  if (!is.null(sql_file)) {
-    # If the file doesn't exist, error out
-    if (!file.exists(sql_file)) {
-      stop("sql_file does not resolve to a file")
-    }
+  # This is a lazy, slightly unpredicatble function: If `sql` resolves to a file
+  # which exists, then read that in as text. If not, assume that it's a sql
+  # statement, and use it instead.
+  if (is.null(sql)) {
+    stop("`sql` cannot be NULL")
+  }
 
-    # Read in the SQL from the file
-    sql <- paste0(readLines(sql_file), collapse = "\n")
+  # See if the variable `sql` resolves to a file
+  if (file.exists(sql)) {
+    vb_message(sql, " resolves to a file. Reading in SQL statement")
+    # Get the filename into an explicit variable
+    sql_file   <- sql
+    sql_string <- paste0(readLines(sql_file), collapse = "\n")
   } else {
-    # Provide some value for the hashing part
-    sql_file <- "None."
-
-    # Use the string provided for the query
-    sql <- sql_string
+    vb_message("parameter `sql` does not resolve to a file. Treating as ",
+               "verbatim SQL statement.")
+    sql_file  <- "None."
+    sql_string <- sql
   }
 
   # If there's no interest in the local cache stuff, hit the db and exit
   if (!local_cache) {
-    return(DBI::dbGetQuery(con, sql))
+    return(DBI::dbGetQuery(con, sql_string))
   }
 
   # If the cache_dir doesn't exist, create it (this won't overwrite anything)
@@ -97,7 +105,7 @@ get_query <- function (
   # hyphen, and the hash of the sql itself
   filename <- file.path(
     normalizePath(cache_dir),
-    paste0(openssl::md5(sql_file), "-", openssl::md5(sql), ".rds")
+    paste0(openssl::md5(sql_file), "-", openssl::md5(sql_string), ".rds")
   )
 
   # If there's already a cached file, just use that (much faster!)
@@ -105,7 +113,7 @@ get_query <- function (
     return(readRDS(filename))
   } else {
     # Otherwise, hit the db, cache the results locally for next time, and exit
-    result <- DBI::dbGetQuery(con, sql)
+    result <- DBI::dbGetQuery(con, sql_string)
 
     # Note: Error handling in light of
     # https://github.com/rstats-db/DBI/issues/125

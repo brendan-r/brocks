@@ -4,13 +4,14 @@
 \alias{get_query}
 \title{Retreive a database query with SQL, with caching and lazy defaults}
 \usage{
-get_query(sql_file = NULL, sql_string = NULL, con = guess_db_connection(),
-  local_cache = TRUE, cache_dir = "./.sql_cache", gitignore = TRUE)
+get_query(sql = NULL, con = guess_db_connection(), local_cache = TRUE,
+  cache_dir = "./.sql_cache", gitignore = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{sql_file}{A path to a SQL text file}
-
-\item{sql_string}{A string containing SQL}
+\item{sql}{\code{\link{character}}. Either a path to an existent text file
+which will be read in as a valid SQL statement and submitted to the sever.
+If the file does not exist, \code{sql} will be treated as a valid SQL
+statement and submitted to the server}
 
 \item{con}{A database connection. If unspecified, and there is a single
 database connection in the global environment, this will be used}
@@ -21,13 +22,18 @@ via \code{\link{saveRDS}}?}
 \item{cache_dir}{The directory in which to cache files}
 
 \item{gitignore}{Should the cache directory be \code{.gitignored}?}
+
+\item{verbose}{Should the function tell you how it's processing the strings
+passed to \code{sql}, via \code{\link{message}}?}
 }
 \value{
 The results of passing the SQL statement to \code{\link{dbGetQuery}}
 }
 \description{
 A convenience function which wraps \code{\link{dbGetQuery}}, by default
-providing some local caching. Exactly one of \code{sql_file} and
-\code{sql_string} must be supplied.
+providing some local caching. The function is deliberately lazy at the cost
+of being unpredictable in edge-cases -- if \code{sql} resolves to a valid
+file, it will be read in as a SQL statement, if it does not, the string will
+be passed directly to the server as an SQL statement.
 }
 
