@@ -20,7 +20,7 @@ guess_db_connection <- function (db_con_classes = "PostgreSQLConnection") {
 
 #' Taken from https://github.com/hadley/httr/blob/1fc659856602f60ff75eb01903513244e3491ec2/R/oauth-cache.R#L52
 #' @keywords internal
-add_line <- function(path, line) {
+add_line <- function(path, line, verbose) {
   if (file.exists(path)) {
     lines <- readLines(path, warn = FALSE)
     lines <- lines[lines != ""]
@@ -100,7 +100,7 @@ get_query <- function(
   dir.create(cache_dir, showWarnings = FALSE)
 
   # If they user wants you to, gitignore the cache_dir
-  add_line(".gitignore", cache_dir)
+  add_line(".gitignore", cache_dir, verbose)
 
   # Generate a filename for the binary data cache: The hash of the filename, a
   # hyphen, and the hash of the sql itself
