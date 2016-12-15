@@ -35,7 +35,7 @@ to_sql_vector <- function(x) {
 #' 'Agresti-Coull'ish Standard Errors
 #'
 #' Agresti-Coull (1998) intervals are a great way to get a quick and
-#' non-terrible estimate of a proportion. They work by using a 'Wald' interval,
+#' non-terrible estimate of a proportion. They work byu sing a 'Wald' interval,
 #' after the addition of 2 successes and 2 failures to the sample (other numbers
 #' can be specified, via the \code{wt} argument). This function creates a
 #' Wald-style standard-error, after adding psuedo-responses.
@@ -305,9 +305,10 @@ unsci <- function(x, digits = 1, currency = FALSE, symbol = "$", pad = TRUE) {
   # Based on the size of the number, add the prefix. The `paste0("", ...` part
   # is to coerce NAs to character, follwing the behaviour of the scales package
   prefixed <- paste0("", ifelse(
-    x >= 1e+03 & x < 1e+06, k(x),
+    abs(x) >= 1e+03 & abs(x) < 1e+06, k(x),
     ifelse(
-      x >= 1e+06 & x < 1e+09, M(x), ifelse(x >= 1e+09, B(x), r(x))
+      abs(x) >= 1e+06 & abs(x) < 1e+09, M(x),
+      ifelse(abs(x) >= 1e+09, B(x), r(x))
     )
   ))
 
