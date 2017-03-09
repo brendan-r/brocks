@@ -106,7 +106,7 @@ get_query <- function(
   # hyphen, and the hash of the sql itself
   filename <- file.path(
     normalizePath(cache_dir),
-    paste0(openssl::md5(sql_file), "-", openssl::md5(sql_string), ".rds")
+    paste0(openssl::md5(sql_file), "-", sql_hash(sql_string), ".rds")
   )
 
   # If there's already a cached file, just use that (much faster!)
@@ -126,3 +126,31 @@ get_query <- function(
     return(result)
   }
 }
+
+#' Strip a string containing a SQL statement of comments and unneccesary
+#' whitespace, downcase, return the hash
+#'
+#' This is an internal function used by \{code\link{get_query}} to return the
+#' same hash for (certain) equivalent SQL statements
+#'
+#' @param sql A string, containing a SQL statement
+#' @return A
+#' @keywords internal
+sql_hash <- function(sql) {
+  sql %>%
+    # Downcase
+    tolower() %>%
+    # Split by line
+    strsplit("\n") %>%
+    unlist() %>%
+    # Remove anything after a -- (e.g. comments)
+    gsub("--.*", "", .) %>%
+    # Get it back into one string
+    paste(collapse = " ") %>%
+    # Remove all duped whitespace
+    gsub("[[:space:]]+", " ", .) %>%
+    # Get the hash
+    openssl::md5()
+}
+
+
