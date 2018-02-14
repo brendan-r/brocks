@@ -34,6 +34,25 @@ refactor <- function(x, new_values, throw_error = FALSE){
 }
 
 
+#' Bin numeric data into ntiles
+#'
+#' A function which accepts numeric data, calculates ntiles from it (by
+#' default, quartiles are used), and returns a factor variable, corresponding
+#' to the ntile within within which each data point in \code{x} resides.
+#'
+#' @param x A numeric vector to be transformed into a factor variable
+#' @param ntiles The number of groups that the data should be divided in
+#'   to. For example, the default, 4, will produce a factor level corresponding
+#'   to which quartile the value of x is in (denoted as Q1, Q2, Q3, Q4).
+#' @return A factor variable, the same length as \code{x}
+cut_qtile <- function(x, ntiles = 4) {
+  cut(
+    x, quantile(x, seq(from = 0, to = 1, length.out = ntiles + 1)),
+    include.lowest = TRUE,
+    labels = paste0("Q", lz(1:ntiles))
+  )
+}
+
 #' Produce a lookup for refactor()
 #'
 #' @description {
