@@ -47,6 +47,24 @@ to_sql_vector <- function(x) {
     paste0("('", ., "')")         # Put brackets on it
 }
 
+##' Summarise missing data in a data.frame
+##'
+##' @param x a data.frame
+##' @return
+id_na <- function(x) {
+
+  pc_missing <- x %>%
+    apply(2, function(x) mean(is.na(x)))
+
+  data.frame(
+    variable   = names(pc_missing),
+    pc_missing = pc_missing
+  ) %>%
+    arrange(desc(pc_missing)) %>%
+    mutate(`%` = scales::percent(pc_missing))
+
+}
+
 
 #' 'Agresti-Coull'ish Standard Errors
 #'
