@@ -45,7 +45,7 @@ refactor <- function(x, new_values, throw_error = FALSE){
 #'   to. For example, the default, 4, will produce a factor level corresponding
 #'   to which quartile the value of x is in (denoted as Q1, Q2, Q3, Q4).
 #' @return A factor variable, the same length as \code{x}
-cut_qtile <- function(x, ntiles = 4) {
+cut_ntile <- function(x, ntiles = 4) {
   cut(
     x, quantile(x, seq(from = 0, to = 1, length.out = ntiles + 1)),
     include.lowest = TRUE,
