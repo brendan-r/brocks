@@ -1,3 +1,19 @@
+##' Find the number of day in the month of a given date
+##'
+##' Adapted from Hmisc::monthDays (which currently has a broken dependency)
+##' @param time The Date/time you're interested in finding the number of days in
+##'   the month for
+##' @return The number of days in that month
+days_in_month <- function(time) {
+  time <- as.POSIXlt(time)
+  time$mday[] <- time$sec[] <- time$min <- time$hour <- 0
+  time$mon <- time$mon + 1
+
+  return(as.POSIXlt(as.POSIXct(time))$mday)
+}
+
+
+
 #' Read a text file
 #'
 #' A simple wrapper function around \code{\link{readLines}}, which combines each
